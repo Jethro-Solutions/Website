@@ -10,6 +10,50 @@ const config: Config = {
   darkMode: 'class',
   theme: {
     extend: {
+      spacing: {
+        // Base spacing unit: 0.25rem (4px)
+        // These will be used as a base for all spacing utilities (margin, padding, width, etc.)
+        'xs': '0.25rem',   // 4px
+        'sm': '0.5rem',    // 8px
+        'md': '1rem',      // 16px
+        'lg': '1.5rem',    // 24px
+        'xl': '2rem',      // 32px
+        '2xl': '2.5rem',   // 40px
+        '3xl': '3rem',     // 48px
+        '4xl': '4rem',     // 64px
+        '5xl': '5rem',     // 80px
+        '6xl': '6rem',     // 96px
+        '7xl': '8rem',     // 128px
+        '8xl': '10rem',    // 160px
+        '9xl': '12rem',    // 192px
+        // Fractional spacing for layouts
+        '1/2': '50%',
+        '1/3': '33.333333%',
+        '2/3': '66.666667%',
+        '1/4': '25%',
+        '3/4': '75%',
+        '1/5': '20%',
+        '2/5': '40%',
+        '3/5': '60%',
+        '4/5': '80%',
+      },
+      // Section padding that increases at larger screen sizes
+      padding: {
+        'section-sm': '2rem',     // 32px
+        'section-md': '4rem',     // 64px
+        'section-lg': '6rem',     // 96px
+        'section-xl': '8rem',     // 128px
+      },
+      // Custom gap values for consistent grid and flex layouts
+      gap: {
+        'xs': '0.25rem',  // 4px
+        'sm': '0.5rem',   // 8px
+        'md': '1rem',     // 16px
+        'lg': '1.5rem',   // 24px
+        'xl': '2rem',     // 32px
+        '2xl': '3rem',    // 48px
+        '3xl': '4rem',    // 64px
+      },
       colors: {
         // Primary colors: Deep blues transitioning to vibrant orange/red gradients
         primary: {

@@ -34,6 +34,27 @@
   --text: #FFFFFF;
   --text-muted: #CCCCCC;
   --text-subtle: #999999;
+  
+  /* Spacing System */
+  --space-xs: 0.25rem;    /* 4px */
+  --space-sm: 0.5rem;     /* 8px */
+  --space-md: 1rem;       /* 16px */
+  --space-lg: 1.5rem;     /* 24px */
+  --space-xl: 2rem;       /* 32px */
+  --space-2xl: 2.5rem;    /* 40px */
+  --space-3xl: 3rem;      /* 48px */
+  --space-4xl: 4rem;      /* 64px */
+  --space-5xl: 5rem;      /* 80px */
+  --space-6xl: 6rem;      /* 96px */
+  --space-7xl: 8rem;      /* 128px */
+  --space-8xl: 10rem;     /* 160px */
+  --space-9xl: 12rem;     /* 192px */
+  
+  /* Responsive Section Padding */
+  --section-padding-sm: 2rem;    /* 32px */
+  --section-padding-md: 4rem;    /* 64px */
+  --section-padding-lg: 6rem;    /* 96px */
+  --section-padding-xl: 8rem;    /* 128px */
 }
 
 @layer base {
@@ -64,11 +85,62 @@
   }
   
   .section {
-    @apply py-16 px-4 md:py-24 md:px-8;
+    @apply py-16 px-4 md:py-24 md:px-8 lg:py-32 lg:px-12;
   }
   
   .container-custom {
-    @apply w-full max-w-7xl mx-auto;
+    @apply w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8;
+  }
+  
+  /* Responsive spacing classes */
+  .space-stack-xs {
+    @apply mb-xs;
+  }
+  
+  .space-stack-sm {
+    @apply mb-sm;
+  }
+  
+  .space-stack-md {
+    @apply mb-md;
+  }
+  
+  .space-stack-lg {
+    @apply mb-lg;
+  }
+  
+  .space-stack-xl {
+    @apply mb-xl;
+  }
+  
+  .space-stack-2xl {
+    @apply mb-2xl;
+  }
+  
+  .space-stack-3xl {
+    @apply mb-3xl;
+  }
+  
+  /* Content sections with responsive padding */
+  .section-padding {
+    @apply py-section-sm px-4 sm:py-section-sm sm:px-6 md:py-section-md md:px-8 lg:py-section-lg lg:px-10 xl:py-section-xl xl:px-12;
+  }
+  
+  /* Content sizes */
+  .content-narrow {
+    @apply max-w-2xl mx-auto;
+  }
+  
+  .content-medium {
+    @apply max-w-4xl mx-auto;
+  }
+  
+  .content-wide {
+    @apply max-w-6xl mx-auto;
+  }
+  
+  .content-full {
+    @apply max-w-7xl mx-auto;
   }
 }
 
