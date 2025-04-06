@@ -1,0 +1,5 @@
+#!/usr/bin/env sh
+# pre-commit hook for Jethro Solutions website
+# Run lint-staged to format and lint code before commits
+
+npx lint-staged

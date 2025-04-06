@@ -1,0 +1,84 @@
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --primary-blue: #0F2D5F;
+  --primary-blue-light: #1A4DA6;
+  --primary-blue-dark: #091C3E;
+  
+  --primary-orange: #F15A24;
+  --primary-orange-light: #FF7D4C;
+  --primary-orange-dark: #D44111;
+  
+  --primary-red: #D02A2A;
+  --primary-red-light: #F45151;
+  --primary-red-dark: #B01B1B;
+  
+  --secondary-teal: #1AB0B0;
+  --secondary-teal-light: #34D0D0;
+  --secondary-teal-dark: #128888;
+  
+  --secondary-green: #27A844;
+  --secondary-green-light: #3ECB60;
+  --secondary-green-dark: #1D7F32;
+  
+  --background: #000000;
+  --background-light: #121212;
+  --background-lighter: #202020;
+  
+  --text: #FFFFFF;
+  --text-muted: #CCCCCC;
+  --text-subtle: #999999;
+}
+
+@layer base {
+  html {
+    @apply antialiased scroll-smooth;
+  }
+
+  body {
+    @apply font-sans bg-background text-text;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-serif font-bold tracking-wide;
+  }
+
+  code, pre {
+    @apply font-mono;
+  }
+}
+
+@layer components {
+  .gradient-text {
+    @apply bg-clip-text text-transparent bg-gradient-to-r from-primary-blue via-primary-orange to-primary-red;
+  }
+  
+  .gradient-bg {
+    @apply bg-gradient-to-r from-primary-blue via-primary-orange to-primary-red;
+  }
+  
+  .section {
+    @apply py-16 px-4 md:py-24 md:px-8;
+  }
+  
+  .container-custom {
+    @apply w-full max-w-7xl mx-auto;
+  }
+}
+
+@layer utilities {
+  .blur-backdrop {
+    @apply backdrop-blur-md bg-background/70;
+  }
+  
+  .transition-standard {
+    @apply transition-all duration-300 ease-in-out;
+  }
+}
+

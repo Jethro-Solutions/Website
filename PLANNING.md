@@ -1,33 +1,36 @@
 # Jethro Solutions Website Planning Document
 
 ## Project Overview
-This document outlines the high-level direction and scope for the Jethro Solutions website. The website will serve as the company's primary online presence, showcasing services, generating leads, and establishing brand authority.
+This document outlines the high-level direction and scope for the Jethro Solutions website. The website will serve as the company's primary online presence, showcasing services in both technology and financial solutions, generating qualified leads, and establishing brand authority with a premium, modern digital experience.
 
 ## Business Objectives
-- Establish a professional online presence
+- Establish a professional online presence that reflects Jethro's identity
 - Generate qualified leads through contact forms and call-to-actions
-- Showcase Jethro Solutions' expertise and services
+- Showcase Jethro Solutions' expertise and services in both technology and financial domains
 - Improve brand recognition and credibility
 - Provide valuable information to potential clients
+- Display interactive project showcases and case studies
 
 ## Target Audience
-- Primary: Business decision makers looking for solutions in our industry
-- Secondary: Potential partners and industry collaborators
-- Tertiary: Job seekers interested in career opportunities
+- Primary: Small-medium business owners and decision-makers
+- Secondary: Finance department leaders and technology managers
+- Tertiary: Operations executives looking for optimization
 
 ## Core Website Requirements
 1. **Modern, Responsive Design**
    - Mobile-first approach
-   - Fast loading times
+   - Fast loading times (under 3 seconds)
    - Accessible to all users (WCAG 2.1 AA compliance)
+   - Dark theme with gradient-rich design elements
 
 2. **Key Pages**
-   - Home Page: Company overview and key value propositions
-   - About Us: Company history, mission, vision, team
-   - Services: Detailed breakdown of offerings
-   - Case Studies/Portfolio: Success stories and examples
-   - Blog/Resources: Thought leadership content
-   - Contact: Easy ways to reach the company
+   - Home Page: Company overview, animated hero section with gradient background, featured project showcase
+   - About Section: Company history, team profiles, timeline of evolution, values and philosophy
+   - Services - Technology Solutions: Custom web/app development, software implementations, integration capabilities
+   - Services - Financial Solutions: Visualization dashboards, predictive modeling, auditing automation, forecasting
+   - Projects Showcase: Interactive display of example implementations with case studies and ROI metrics
+   - Resources: Blog/articles on tech and financial insights, downloadable materials, FAQ section
+   - Contact/Get Started: Interactive form, booking system, service selection wizard
 
 3. **Technical Requirements**
    - SEO optimized structure
@@ -37,10 +40,63 @@ This document outlines the high-level direction and scope for the Jethro Solutio
    - Fast load times (under 3 seconds)
    - Content management system for easy updates
 
+## Frontend Architecture
+
+### Tech Stack
+- **Framework**: Next.js for server-side rendering and optimal performance
+- **UI Components**: shadcn/ui library for core components with custom extensions
+- **Styling**: Tailwind CSS for utility-based styling with custom theme configuration
+- **Animation Libraries**: 
+  - Framer Motion for page transitions and macro animations
+  - React Spring for micro-interactions
+  - GSAP for complex timeline animations
+- **State Management**: React Context API for global state, React Query for data fetching
+- **Form Handling**: React Hook Form with Zod validation
+
+### Component Architecture
+1. **Core Components**
+   - Layout components (Header, Footer, PageContainer)
+   - Navigation components (MainNav, MobileNav, SubNav)
+   - UI primitives (Button, Card, Input, Select, Modal)
+   - SEO components (Meta, OpenGraph)
+
+2. **Feature Components**
+   - Hero sections with gradient animations
+   - Project showcases with interactive elements
+   - Timeline visualizations for company history
+   - Service category displays with hover effects
+   - Case study comparisons with before/after sliders
+   - Interactive ROI calculators and visualization tools
+
+3. **Animation System**
+   - Scroll-triggered animations for content reveal
+   - Hover state animations with gradient transitions
+   - Page transition effects
+   - Parallax scrolling for depth
+   - Loading state animations with branded elements
+
+4. **Responsive Strategy**
+   - Mobile-first development approach
+   - Breakpoint system for tablet and desktop
+   - Specific component variants for different screen sizes
+   - Touch-optimized interactions for mobile devices
+
 ## Brand Guidelines
-- Use existing company color palette, typography, and logo
-- Maintain consistent voice and tone across all content
-- Emphasize professionalism, expertise, and reliability
+- **Color Palette**:
+  - Primary: Deep blues transitioning to vibrant orange/red gradients
+  - Secondary: Teals and greens as accent colors
+  - Backgrounds: Primarily black for dramatic contrast
+  - Text: White for readability and clean appearance
+- **Typography**:
+  - Serif font: For headlines, page titles, and important statements to convey authority, elegance, and tradition
+  - Monospaced font: For code snippets, technical specifications, and technical terms or commands requiring visual distinction
+  - Sans-serif font: For body text, navigation elements, and UI components where readability is essential, especially on smaller screens
+  - Spacing: Generous tracking for premium feel
+- **Visual Elements**:
+  - Gradient blur effects for backgrounds
+  - Minimalist iconography
+  - Abstract shapes for section dividers
+  - Consistent imagery treatment
 
 ## Timeline and Phases
 1. **Phase 1: Planning and Design** (Current)
@@ -48,16 +104,22 @@ This document outlines the high-level direction and scope for the Jethro Solutio
    - Sitemap creation
    - Wireframing key pages
    - Design mockups
+   - Component architecture planning
+   - Animation prototyping
 
 2. **Phase 2: Development**
-   - Frontend development
-   - Backend functionality
+   - Frontend foundation setup (Next.js, Tailwind CSS)
+   - Component library development
+   - Page implementations
+   - Animation system integration
+   - Backend API integration
    - Content creation
-   - Integration of third-party tools
+   - Interactive feature development
 
 3. **Phase 3: Testing and Launch**
    - Cross-browser testing
    - Responsiveness testing
+   - Animation performance optimization
    - Content review
    - SEO implementation
    - Analytics setup
@@ -68,16 +130,17 @@ This document outlines the high-level direction and scope for the Jethro Solutio
    - Performance monitoring
    - SEO optimization
    - Feature enhancements
+   - Conversion rate optimization
 
 ## Success Metrics
-- Increase in qualified leads
+- Increase in qualified leads from small-medium businesses
 - Improved user engagement (time on site, pages per visit)
-- Higher conversion rates
+- Higher conversion rates on consultation bookings
 - Better search engine rankings
 - Reduced bounce rate
+- Engagement with project showcases
 
 ## Project Constraints
-- Budget limitations
-- Timeline requirements
-- Technical constraints
-- Content availability
+- Animation performance on lower-end devices
+- Complex interactive features increasing development time
+- Content availability for project showcases
