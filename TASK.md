@@ -3,9 +3,9 @@
 ## Initial Setup Tasks
 
 ### Project Initialization
-- [ ] Set up a git repository
+- [x] Set up a git repository
 - [ ] Create necessary branches (main, development, feature branches)
-- [ ] Set up development environment
+- [x] Set up development environment
 - [ ] Choose and set up a frontend framework (React, Next.js, etc.)
 - [ ] Configure build tools (Webpack, Vite, etc.)
 
@@ -108,6 +108,23 @@
 - [ ] Set up goal conversions
 - [ ] Implement Google Tag Manager (if needed)
 - [ ] Configure dashboards for key metrics
+
+### Backend Setup (Added 2023-04-05)
+- [x] Set up a basic Node.js/Express.js server structure
+- [x] Configure essential middleware (body-parser, cors, etc.)
+- [x] Create a basic server.js file with proper error handling
+- [x] Add environment configuration (.env setup)
+- [x] Set up MongoDB connection
+- [x] Create database models for core functionality
+- [x] Implement basic data validation
+- [x] Create a RESTful API structure
+- [x] Implement routes for contact form submission
+- [x] Add authentication framework
+- [x] Set up API documentation structure
+- [x] Configure Jest for backend testing
+- [x] Create test templates for routes and controllers
+- [x] Create Docker configuration for containerization
+- [x] Set up Docker Compose for development
 
 ## Testing Tasks
 
