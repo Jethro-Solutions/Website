@@ -4,9 +4,8 @@ import MainLayout from "@/components/layout/MainLayout";
 import { GlobalProvider } from "@/lib/context";
 
 export const metadata: Metadata = {
-  title: "Jethro Solutions | Technology & Financial Solutions",
-  description: "Professional technology and financial solutions for small-medium businesses. Custom development, financial modeling, and business optimization services.",
-  keywords: "technology solutions, financial solutions, business optimization, custom development, financial modeling",
+  title: "Jethro Solutions",
+  description: "Technology and Financial Solutions for Modern Businesses",
 };
 
 export default function RootLayout({
@@ -15,8 +14,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-      <body className="antialiased dark:bg-black">
+    <html lang="en" suppressHydrationWarning>
+      <body className="antialiased bg-background text-text">
         <GlobalProvider>
           <MainLayout>
             {children}

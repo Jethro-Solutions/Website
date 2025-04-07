@@ -2,6 +2,8 @@
 
 import { ColorSystem } from "./ColorSystem";
 import { TypographySystem } from "./TypographySystem";
+import { GridSystem } from "./GridSystem";
+import { SpacingSystem } from "./SpacingSystem";
 import { H1 } from "./Typography";
 
 export function DesignSystemPage() {
@@ -19,6 +21,14 @@ export function DesignSystemPage() {
           
           <section id="typography">
             <TypographySystem />
+          </section>
+
+          <section id="spacing">
+            <SpacingSystem />
+          </section>
+          
+          <section id="grid">
+            <GridSystem />
           </section>
         </div>
       </div>

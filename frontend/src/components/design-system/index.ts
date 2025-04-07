@@ -1,4 +1,7 @@
-export * from './ColorSystem';
-export * from './DesignSystemPage';
+export { DesignSystemPage } from './DesignSystemPage';
+export { TypographySystem } from './TypographySystem';
 export * from './Typography';
-export * from './TypographySystem'; 
+export { ColorSystem } from './ColorSystem';
+export { SpacingSystem } from './SpacingSystem';
+export { Spacer } from './Spacer';
+export { GridSystem } from './GridSystem'; 
