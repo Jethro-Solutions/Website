@@ -2,9 +2,11 @@
 
 import { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useAppState } from '@/lib/context';
 import { linearGradient, radialGradient, meshGradient, COLORS } from '@/lib/colors';
+import { FlowingGradientButton } from '@/components/ui/FlowingGradientButton';
 
 // Main menu animation variants
 const menuVariants = {
@@ -116,6 +118,22 @@ const dropdownItemVariants = {
   }
 };
 
+// Enhanced hover animation for dropdown items
+const mobileDropdownItemHoverVariants = {
+  initial: {
+    x: 0,
+    backgroundColor: 'rgba(255, 255, 255, 0)'
+  },
+  hover: {
+    x: 6,
+    backgroundColor: 'rgba(255, 255, 255, 0.05)',
+    transition: { 
+      duration: 0.2, 
+      ease: 'easeOut' 
+    }
+  }
+};
+
 const MobileNav = () => {
   const { isNavOpen, setNavOpen } = useAppState();
   const [openDropdown, setOpenDropdown] = useState<string | null>(null);
@@ -197,6 +215,16 @@ const MobileNav = () => {
               exit="hidden"
               variants={menuVariants}
             >
+              <div className="flex justify-center mb-8">
+                <Image 
+                  src="/images/Jethro Logo Full Text Transparent.png"
+                  alt="Jethro Solutions"
+                  width={200}
+                  height={60}
+                  className="opacity-90"
+                />
+              </div>
+              
               <nav className="flex flex-col space-y-4">
                 <MobileNavLink href="/about">About</MobileNavLink>
                 
@@ -243,40 +271,125 @@ const MobileNav = () => {
                         variants={dropdownVariants}
                         className="pl-4 mt-2 overflow-hidden"
                       >
-                        <motion.div variants={dropdownItemVariants}>
+                        {/* Technology dropdown header */}
+                        <motion.div 
+                          variants={dropdownItemVariants}
+                          className="text-xs uppercase text-text-subtle font-medium tracking-wider px-3 pb-2 mb-2 border-b border-white/5"
+                        >
+                          Technology Services
+                        </motion.div>
+                        
+                        <motion.div 
+                          variants={dropdownItemVariants}
+                          whileHover="hover"
+                          initial="initial"
+                        >
                           <Link 
                             href="/tech-solutions/web-development"
-                            className="block text-lg py-2 text-text-muted hover:text-white transition-all duration-200"
+                            className="block text-lg py-2 pl-3 pr-2 text-text-muted hover:text-white transition-all duration-200 rounded-md flex items-center"
                             onClick={() => setNavOpen(false)}
                           >
+                            <motion.span className="w-5 h-5 mr-3 text-primary-blue-light">
+                              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                                <path d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9" />
+                              </svg>
+                            </motion.span>
                             Web Development
                           </Link>
                         </motion.div>
-                        <motion.div variants={dropdownItemVariants}>
+                        
+                        <motion.div 
+                          variants={dropdownItemVariants}
+                          whileHover="hover"
+                          initial="initial"
+                        >
                           <Link 
                             href="/tech-solutions/app-development"
-                            className="block text-lg py-2 text-text-muted hover:text-white transition-all duration-200"
+                            className="block text-lg py-2 pl-3 pr-2 text-text-muted hover:text-white transition-all duration-200 rounded-md flex items-center"
                             onClick={() => setNavOpen(false)}
                           >
+                            <motion.span className="w-5 h-5 mr-3 text-primary-blue-light">
+                              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                                <path d="M12 18h.01M8 21h8a2 2 0 002-2V5a2 2 0 00-2-2H8a2 2 0 00-2 2v14a2 2 0 002 2z" />
+                              </svg>
+                            </motion.span>
                             App Development
                           </Link>
                         </motion.div>
-                        <motion.div variants={dropdownItemVariants}>
+                        
+                        <motion.div 
+                          variants={dropdownItemVariants}
+                          whileHover="hover"
+                          initial="initial"
+                        >
                           <Link 
                             href="/tech-solutions/software-implementation"
-                            className="block text-lg py-2 text-text-muted hover:text-white transition-all duration-200"
+                            className="block text-lg py-2 pl-3 pr-2 text-text-muted hover:text-white transition-all duration-200 rounded-md flex items-center"
                             onClick={() => setNavOpen(false)}
                           >
+                            <motion.span className="w-5 h-5 mr-3 text-primary-blue-light">
+                              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                                <path d="M9 3v2m6-2v2M9 19v2m6-2v2M5 9H3m2 6H3m18-6h-2m2 6h-2M7 19h10a2 2 0 002-2V7a2 2 0 00-2-2H7a2 2 0 00-2 2v10a2 2 0 002 2zM9 9h6v6H9V9z" />
+                              </svg>
+                            </motion.span>
                             Software Implementation
                           </Link>
                         </motion.div>
-                        <motion.div variants={dropdownItemVariants}>
+                        
+                        <motion.div 
+                          variants={dropdownItemVariants}
+                          whileHover="hover"
+                          initial="initial"
+                        >
                           <Link 
                             href="/tech-solutions/integrations"
-                            className="block text-lg py-2 text-text-muted hover:text-white transition-all duration-200"
+                            className="block text-lg py-2 pl-3 pr-2 text-text-muted hover:text-white transition-all duration-200 rounded-md flex items-center"
                             onClick={() => setNavOpen(false)}
                           >
+                            <motion.span className="w-5 h-5 mr-3 text-primary-blue-light">
+                              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                                <path d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4" />
+                              </svg>
+                            </motion.span>
                             Integration Services
+                          </Link>
+                        </motion.div>
+                        
+                        <motion.div 
+                          variants={dropdownItemVariants}
+                          whileHover="hover"
+                          initial="initial"
+                        >
+                          <Link 
+                            href="/tech-solutions/cloud-infrastructure"
+                            className="block text-lg py-2 pl-3 pr-2 text-text-muted hover:text-white transition-all duration-200 rounded-md flex items-center"
+                            onClick={() => setNavOpen(false)}
+                          >
+                            <motion.span className="w-5 h-5 mr-3 text-primary-blue-light">
+                              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                                <path d="M3 15a4 4 0 004 4h9a5 5 0 10-.1-9.999 5.002 5.002 0 10-9.78 2.096A4.001 4.001 0 003 15z" />
+                              </svg>
+                            </motion.span>
+                            Cloud Infrastructure
+                          </Link>
+                        </motion.div>
+                        
+                        <motion.div 
+                          variants={dropdownItemVariants}
+                          whileHover="hover"
+                          initial="initial"
+                        >
+                          <Link 
+                            href="/tech-solutions/security-solutions"
+                            className="block text-lg py-2 pl-3 pr-2 text-text-muted hover:text-white transition-all duration-200 rounded-md flex items-center"
+                            onClick={() => setNavOpen(false)}
+                          >
+                            <motion.span className="w-5 h-5 mr-3 text-primary-blue-light">
+                              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                                <path d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
+                              </svg>
+                            </motion.span>
+                            Security Solutions
                           </Link>
                         </motion.div>
                       </motion.div>
@@ -327,40 +440,256 @@ const MobileNav = () => {
                         variants={dropdownVariants}
                         className="pl-4 mt-2 overflow-hidden"
                       >
-                        <motion.div variants={dropdownItemVariants}>
+                        {/* Financial dropdown header */}
+                        <motion.div 
+                          variants={dropdownItemVariants}
+                          className="text-xs uppercase text-text-subtle font-medium tracking-wider px-3 pb-2 mb-2 border-b border-white/5"
+                        >
+                          Financial Services
+                        </motion.div>
+                        
+                        <motion.div 
+                          variants={dropdownItemVariants}
+                          whileHover="hover"
+                          initial="initial"
+                        >
                           <Link 
                             href="/financial-solutions/dashboards"
-                            className="block text-lg py-2 text-text-muted hover:text-white transition-all duration-200"
+                            className="block text-lg py-2 pl-3 pr-2 text-text-muted hover:text-white transition-all duration-200 rounded-md flex items-center"
                             onClick={() => setNavOpen(false)}
                           >
+                            <motion.span className="w-5 h-5 mr-3 text-primary-blue-light">
+                              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                                <path d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
+                              </svg>
+                            </motion.span>
                             Visualization Dashboards
                           </Link>
                         </motion.div>
-                        <motion.div variants={dropdownItemVariants}>
+                        
+                        <motion.div 
+                          variants={dropdownItemVariants}
+                          whileHover="hover"
+                          initial="initial"
+                        >
                           <Link 
                             href="/financial-solutions/predictive-modeling"
-                            className="block text-lg py-2 text-text-muted hover:text-white transition-all duration-200"
+                            className="block text-lg py-2 pl-3 pr-2 text-text-muted hover:text-white transition-all duration-200 rounded-md flex items-center"
                             onClick={() => setNavOpen(false)}
                           >
+                            <motion.span className="w-5 h-5 mr-3 text-primary-blue-light">
+                              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                                <path d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" />
+                              </svg>
+                            </motion.span>
                             Predictive Modeling
                           </Link>
                         </motion.div>
-                        <motion.div variants={dropdownItemVariants}>
+                        
+                        <motion.div 
+                          variants={dropdownItemVariants}
+                          whileHover="hover"
+                          initial="initial"
+                        >
                           <Link 
                             href="/financial-solutions/audit-automation"
-                            className="block text-lg py-2 text-text-muted hover:text-white transition-all duration-200"
+                            className="block text-lg py-2 pl-3 pr-2 text-text-muted hover:text-white transition-all duration-200 rounded-md flex items-center"
                             onClick={() => setNavOpen(false)}
                           >
+                            <motion.span className="w-5 h-5 mr-3 text-primary-blue-light">
+                              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                                <path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4" />
+                              </svg>
+                            </motion.span>
                             Audit Automation
                           </Link>
                         </motion.div>
-                        <motion.div variants={dropdownItemVariants}>
+                        
+                        <motion.div 
+                          variants={dropdownItemVariants}
+                          whileHover="hover"
+                          initial="initial"
+                        >
                           <Link 
                             href="/financial-solutions/forecasting"
-                            className="block text-lg py-2 text-text-muted hover:text-white transition-all duration-200"
+                            className="block text-lg py-2 pl-3 pr-2 text-text-muted hover:text-white transition-all duration-200 rounded-md flex items-center"
                             onClick={() => setNavOpen(false)}
                           >
+                            <motion.span className="w-5 h-5 mr-3 text-primary-blue-light">
+                              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                                <path d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                              </svg>
+                            </motion.span>
                             Forecasting Tools
+                          </Link>
+                        </motion.div>
+                        
+                        <motion.div 
+                          variants={dropdownItemVariants}
+                          whileHover="hover"
+                          initial="initial"
+                        >
+                          <Link 
+                            href="/financial-solutions/budget-optimization"
+                            className="block text-lg py-2 pl-3 pr-2 text-text-muted hover:text-white transition-all duration-200 rounded-md flex items-center"
+                            onClick={() => setNavOpen(false)}
+                          >
+                            <motion.span className="w-5 h-5 mr-3 text-primary-blue-light">
+                              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                                <path d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                              </svg>
+                            </motion.span>
+                            Budget Optimization
+                          </Link>
+                        </motion.div>
+                        
+                        <motion.div 
+                          variants={dropdownItemVariants}
+                          whileHover="hover"
+                          initial="initial"
+                        >
+                          <Link 
+                            href="/financial-solutions/risk-management"
+                            className="block text-lg py-2 pl-3 pr-2 text-text-muted hover:text-white transition-all duration-200 rounded-md flex items-center"
+                            onClick={() => setNavOpen(false)}
+                          >
+                            <motion.span className="w-5 h-5 mr-3 text-primary-blue-light">
+                              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                                <path d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+                              </svg>
+                            </motion.span>
+                            Risk Management
+                          </Link>
+                        </motion.div>
+                      </motion.div>
+                    )}
+                  </AnimatePresence>
+                </div>
+                
+                {/* Solutions dropdown - new section */}
+                <div className="relative">
+                  <motion.div 
+                    variants={linkVariants}
+                    className="flex items-center justify-between"
+                  >
+                    <button 
+                      onClick={() => toggleDropdown('solutions')}
+                      className="group text-left w-full text-2xl font-serif text-text py-2 border-b border-white/10 transition-standard relative overflow-hidden flex items-center justify-between"
+                      aria-expanded={openDropdown === 'solutions'}
+                    >
+                      <span className="relative z-10 group-hover:text-transparent group-hover:bg-clip-text group-hover:bg-gradient-to-r group-hover:from-primary-blue-light group-hover:to-primary-orange transition-all duration-300">
+                        Solutions
+                      </span>
+                      <motion.svg 
+                        xmlns="http://www.w3.org/2000/svg" 
+                        width="20" 
+                        height="20" 
+                        viewBox="0 0 24 24" 
+                        fill="none" 
+                        stroke="currentColor" 
+                        strokeWidth="2" 
+                        strokeLinecap="round" 
+                        strokeLinejoin="round"
+                        className="ml-2 text-text-muted transition-all duration-300"
+                        animate={{ rotate: openDropdown === 'solutions' ? 180 : 0 }}
+                        transition={{ duration: 0.3 }}
+                      >
+                        <polyline points="6 9 12 15 18 9"></polyline>
+                      </motion.svg>
+                      <span className="absolute bottom-0 left-0 w-0 h-[1px] bg-gradient-to-r from-primary-blue-light via-primary-orange to-primary-red group-hover:w-full transition-all duration-500 ease-out"></span>
+                    </button>
+                  </motion.div>
+                  
+                  <AnimatePresence>
+                    {openDropdown === 'solutions' && (
+                      <motion.div
+                        initial="hidden"
+                        animate="visible"
+                        exit="hidden"
+                        variants={dropdownVariants}
+                        className="pl-4 mt-2 overflow-hidden"
+                      >
+                        {/* Solutions dropdown header */}
+                        <motion.div 
+                          variants={dropdownItemVariants}
+                          className="text-xs uppercase text-text-subtle font-medium tracking-wider px-3 pb-2 mb-2 border-b border-white/5"
+                        >
+                          By Category
+                        </motion.div>
+                        
+                        <motion.div 
+                          variants={dropdownItemVariants}
+                          whileHover="hover"
+                          initial="initial"
+                        >
+                          <Link 
+                            href="/solutions/industry-specific"
+                            className="block text-lg py-2 pl-3 pr-2 text-text-muted hover:text-white transition-all duration-200 rounded-md flex items-center"
+                            onClick={() => setNavOpen(false)}
+                          >
+                            <motion.span className="w-5 h-5 mr-3 text-primary-blue-light">
+                              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                                <path d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
+                              </svg>
+                            </motion.span>
+                            Industry Solutions
+                          </Link>
+                        </motion.div>
+                        
+                        <motion.div 
+                          variants={dropdownItemVariants}
+                          whileHover="hover"
+                          initial="initial"
+                        >
+                          <Link 
+                            href="/solutions/consulting"
+                            className="block text-lg py-2 pl-3 pr-2 text-text-muted hover:text-white transition-all duration-200 rounded-md flex items-center"
+                            onClick={() => setNavOpen(false)}
+                          >
+                            <motion.span className="w-5 h-5 mr-3 text-primary-blue-light">
+                              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                                <path d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" />
+                              </svg>
+                            </motion.span>
+                            Strategic Consulting
+                          </Link>
+                        </motion.div>
+                        
+                        <motion.div 
+                          variants={dropdownItemVariants}
+                          whileHover="hover"
+                          initial="initial"
+                        >
+                          <Link 
+                            href="/solutions/enterprise"
+                            className="block text-lg py-2 pl-3 pr-2 text-text-muted hover:text-white transition-all duration-200 rounded-md flex items-center"
+                            onClick={() => setNavOpen(false)}
+                          >
+                            <motion.span className="w-5 h-5 mr-3 text-primary-blue-light">
+                              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                                <path d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                              </svg>
+                            </motion.span>
+                            Enterprise Solutions
+                          </Link>
+                        </motion.div>
+                        
+                        <motion.div 
+                          variants={dropdownItemVariants}
+                          whileHover="hover"
+                          initial="initial"
+                        >
+                          <Link 
+                            href="/solutions/smb"
+                            className="block text-lg py-2 pl-3 pr-2 text-text-muted hover:text-white transition-all duration-200 rounded-md flex items-center"
+                            onClick={() => setNavOpen(false)}
+                          >
+                            <motion.span className="w-5 h-5 mr-3 text-primary-blue-light">
+                              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                                <path d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
+                              </svg>
+                            </motion.span>
+                            Small Business
                           </Link>
                         </motion.div>
                       </motion.div>
@@ -370,22 +699,22 @@ const MobileNav = () => {
                 
                 <MobileNavLink href="/projects">Projects</MobileNavLink>
                 <MobileNavLink href="/resources">Resources</MobileNavLink>
+                <MobileNavLink href="/contact">Contact</MobileNavLink>
                 
-                <motion.div variants={linkVariants} className="mt-8">
-                  <motion.div
-                    className="relative group"
-                    whileHover={{ scale: 1.02 }}
-                    whileTap={{ scale: 0.98 }}
-                  >
-                    <div className="absolute -inset-0.5 bg-gradient-to-r from-primary-blue to-primary-orange rounded-full opacity-0 group-hover:opacity-70 blur-md transition-all duration-300"></div>
-                    <Link 
-                      href="/contact" 
-                      className="block text-center relative gradient-bg py-3 px-6 rounded-full text-white font-medium transition-all duration-300 hover:shadow-lg hover:shadow-primary-blue/20"
-                      onClick={() => setNavOpen(false)}
+                {/* CTA Button */}
+                <motion.div 
+                  variants={linkVariants}
+                  className="mt-6 flex justify-center"
+                >
+                  <Link href="/contact">
+                    <FlowingGradientButton 
+                      variant="primary" 
+                      size="md" 
+                      className="w-full py-3 font-medium"
                     >
                       Get Started
-                    </Link>
-                  </motion.div>
+                    </FlowingGradientButton>
+                  </Link>
                 </motion.div>
               </nav>
               
