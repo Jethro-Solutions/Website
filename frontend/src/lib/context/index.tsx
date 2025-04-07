@@ -1,3 +1,5 @@
+'use client';
+
 import React, { ReactNode } from 'react';
 import { ThemeProvider } from './theme-context';
 import { AppProvider } from './app-context';

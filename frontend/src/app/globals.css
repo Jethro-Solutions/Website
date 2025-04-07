@@ -71,26 +71,32 @@
 
 @layer base {
   html {
-    @apply antialiased scroll-smooth;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    scroll-behavior: smooth;
   }
 
   body {
-    @apply font-sans bg-background text-text;
+    background-color: var(--background);
+    color: var(--text);
+    font-family: 'Inter', Arial, sans-serif;
   }
 
   h1, h2, h3, h4, h5, h6 {
-    @apply font-serif font-bold tracking-wide;
+    font-family: 'Playfair Display', Georgia, serif;
+    font-weight: bold;
+    letter-spacing: 0.025em;
   }
 
   code, pre {
-    @apply font-mono;
+    font-family: 'IBM Plex Mono', Consolas, monospace;
   }
 }
 
 @layer components {
   /* Transitions */
   .transition-standard {
-    @apply transition-all duration-300 ease-in-out;
+    transition: all 300ms ease-in-out;
   }
   
   /* Gradient backgrounds */
@@ -108,7 +114,9 @@
   
   /* Gradient text */
   .gradient-text {
-    @apply bg-clip-text text-transparent;
+    background-clip: text;
+    -webkit-background-clip: text;
+    color: transparent;
     background-image: linear-gradient(135deg, var(--primary-blue-light) 0%, var(--primary-orange) 100%);
   }
   
@@ -133,65 +141,114 @@
   
   /* Container */
   .container-custom {
-    @apply container mx-auto;
+    margin-left: auto;
+    margin-right: auto;
     max-width: 1280px;
   }
   
   /* Responsive spacing classes */
   .space-stack-xs {
-    @apply mb-xs;
+    margin-bottom: var(--space-xs);
   }
   
   .space-stack-sm {
-    @apply mb-sm;
+    margin-bottom: var(--space-sm);
   }
   
   .space-stack-md {
-    @apply mb-md;
+    margin-bottom: var(--space-md);
   }
   
   .space-stack-lg {
-    @apply mb-lg;
+    margin-bottom: var(--space-lg);
   }
   
   .space-stack-xl {
-    @apply mb-xl;
+    margin-bottom: var(--space-xl);
   }
   
   .space-stack-2xl {
-    @apply mb-2xl;
+    margin-bottom: var(--space-2xl);
   }
   
   .space-stack-3xl {
-    @apply mb-3xl;
+    margin-bottom: var(--space-3xl);
   }
   
   /* Content sections with responsive padding */
   .section-padding {
-    @apply py-section-sm px-4 sm:py-section-sm sm:px-6 md:py-section-md md:px-8 lg:py-section-lg lg:px-10 xl:py-section-xl xl:px-12;
+    padding-top: var(--section-padding-sm);
+    padding-bottom: var(--section-padding-sm);
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+  
+  @media (min-width: 640px) {
+    .section-padding {
+      padding-top: var(--section-padding-sm);
+      padding-bottom: var(--section-padding-sm);
+      padding-left: 1.5rem;
+      padding-right: 1.5rem;
+    }
+  }
+  
+  @media (min-width: 768px) {
+    .section-padding {
+      padding-top: var(--section-padding-md);
+      padding-bottom: var(--section-padding-md);
+      padding-left: 2rem;
+      padding-right: 2rem;
+    }
+  }
+  
+  @media (min-width: 1024px) {
+    .section-padding {
+      padding-top: var(--section-padding-lg);
+      padding-bottom: var(--section-padding-lg);
+      padding-left: 2.5rem;
+      padding-right: 2.5rem;
+    }
+  }
+  
+  @media (min-width: 1280px) {
+    .section-padding {
+      padding-top: var(--section-padding-xl);
+      padding-bottom: var(--section-padding-xl);
+      padding-left: 3rem;
+      padding-right: 3rem;
+    }
   }
   
   /* Content sizes */
   .content-narrow {
-    @apply max-w-2xl mx-auto;
+    max-width: 42rem;
+    margin-left: auto;
+    margin-right: auto;
   }
   
   .content-medium {
-    @apply max-w-4xl mx-auto;
+    max-width: 56rem;
+    margin-left: auto;
+    margin-right: auto;
   }
   
   .content-wide {
-    @apply max-w-6xl mx-auto;
+    max-width: 72rem;
+    margin-left: auto;
+    margin-right: auto;
   }
   
   .content-full {
-    @apply max-w-7xl mx-auto;
+    max-width: 80rem;
+    margin-left: auto;
+    margin-right: auto;
   }
 }
 
 @layer utilities {
   .blur-backdrop {
-    @apply backdrop-blur-md bg-background/70;
+    backdrop-filter: blur(12px);
+    background-color: rgba(0, 0, 0, 0.7);
   }
 }
 

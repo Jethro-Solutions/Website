@@ -1,3 +1,5 @@
+'use client';
+
 import { useState, useEffect, useRef, RefObject } from 'react';
 import { useSpring } from 'react-spring';
 import gsap from 'gsap';
@@ -8,7 +10,7 @@ import { useInView } from 'framer-motion';
  */
 export function useAnimateOnScroll<T extends HTMLElement>(
   threshold: number = 0.2
-): [RefObject<T>, boolean] {
+): [RefObject<T | null>, boolean] {
   const ref = useRef<T>(null);
   const inView = useInView(ref, { 
     once: false,

@@ -1,4 +1,5 @@
 import Image from "next/image";
+import Link from "next/link";
 
 export default function Home() {
   return (
@@ -28,6 +29,28 @@ export default function Home() {
               <button className="bg-background-light border border-primary-blue/30 px-8 py-3 rounded-full text-white font-medium transition-standard hover:bg-background-lighter">
                 Contact Us
               </button>
+            </div>
+            
+            {/* Demo Links */}
+            <div className="mt-12 flex flex-col sm:flex-row gap-4">
+              <Link 
+                href="/design-system" 
+                className="text-text-muted hover:text-text transition-colors"
+              >
+                Design System
+              </Link>
+              <Link 
+                href="/icon-animations" 
+                className="text-text-muted hover:text-text transition-colors"
+              >
+                Icon Animations
+              </Link>
+              <Link 
+                href="/loading-demos" 
+                className="text-text-muted hover:text-text transition-colors"
+              >
+                Loading Animations
+              </Link>
             </div>
           </div>
         </div>

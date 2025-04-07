@@ -6,6 +6,9 @@ export * from './utils';
 // React hooks for animations
 export * from './hooks';
 
+// Icon animation system
+export * from './icons';
+
 // GSAP specific utilities
 export {
   fadeIn,
@@ -22,3 +25,6 @@ export {
 
 // React Spring specific utilities 
 export * from './spring'; 
+
+// Scroll animation framework
+export * from './scroll'; 

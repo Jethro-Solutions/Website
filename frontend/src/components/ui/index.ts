@@ -9,4 +9,7 @@ export * from './Badge';
 export * from './Modal';
 export * from './FormField';
 export * from './Spinner';
-export * from './Tabs'; 
+export * from './Tabs';
+export * from './LoadingAnimations';
+export { default as ContentReveal } from './ContentReveal';
+export type { ContentRevealProps, RevealEffect } from './ContentReveal'; 
