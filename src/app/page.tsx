@@ -1,12 +1,11 @@
 import BaseLayout from "./components/layout/base-layout";
 import { Button } from "@/components/ui/button";
 import { ServiceCard } from "@/components/ui/service-card";
-import { AnimatedSection, StaggeredContainer, StaggeredItem } from "@/components/ui/animated-section";
 import { Testimonial } from "@/components/ui/testimonial";
 import { BarChart3, Shield, Cpu, Code, ArrowRight, Zap, Lock, Brain } from "lucide-react";
-import HeroAnimation from "@/components/hero/hero-animation";
 import { Card } from "@/components/ui/card";
-import { GlowBorder, HoverCard3D } from "@/components/animations/hover-effects";
+import { GlowBorder } from "@/components/animations/hover-effects";
+import HeroAnimation from "@/components/hero/hero-animation";
 import { 
   FadeInSection, 
   ParallaxSection, 
@@ -21,7 +20,7 @@ export default function Home() {
   return (
     <BaseLayout>
       {/* Hero Section */}
-      <section className="relative bg-soft-black text-soft-white overflow-hidden min-h-[90vh] flex items-center">
+      <section className="relative bg-black text-soft-white overflow-hidden min-h-[90vh] flex items-center">
         <div className="absolute inset-0 z-0">
           <HeroAnimation />
         </div>
@@ -36,13 +35,13 @@ export default function Home() {
             />
             
             <div className="flex flex-col sm:flex-row gap-12 mb-16">
-              <GlowBorder glowColor="rgba(245, 164, 124, 0.4)" hoverScale={1.01}>
+              <GlowBorder glowColor="rgba(0, 195, 255, 0.4)" hoverScale={1.01}>
                 <Button variant="orange" size="lg">
                   Explore Solutions
                 </Button>
               </GlowBorder>
               
-              <GlowBorder glowColor="rgba(232, 224, 213, 0.4)" hoverScale={1.01}>
+              <GlowBorder glowColor="rgba(0, 195, 255, 0.2)" hoverScale={1.01}>
                 <Button variant="tertiary" size="lg">
                   Request a Demo
                 </Button>
@@ -84,8 +83,8 @@ export default function Home() {
               <Rotate3D className="bg-soft-tan p-8 rounded-lg" maxRotation={5}>
                 <h3 className="text-2xl font-serif font-bold mb-4">Our Mission</h3>
                 <p className="text-lg font-medium italic mb-8">
-                  "To empower financial institutions with technology that transforms data into strategic advantage and 
-                  enables confident decision-making in a rapidly evolving landscape."
+                  &quot;To empower financial institutions with technology that transforms data into strategic advantage and 
+                  enables confident decision-making in a rapidly evolving landscape.&quot;
                 </p>
                 <div className="flex flex-col gap-4">
                   <div className="flex items-center gap-3">
@@ -270,7 +269,7 @@ export default function Home() {
                     <p>Clear pricing and implementation roadmap</p>
                   </li>
                 </ul>
-                <GlowBorder glowColor="rgba(232, 224, 213, 0.4)" hoverScale={1.01}>
+                <GlowBorder glowColor="rgba(0, 195, 255, 0.4)" hoverScale={1.01}>
                   <Button variant="orange" size="lg">
                     Request Demo
                   </Button>
@@ -303,7 +302,7 @@ export default function Home() {
                       placeholder="Tell us about your needs"
                     ></textarea>
                   </div>
-                  <GlowBorder glowColor="rgba(232, 224, 213, 0.4)" hoverScale={1.01}>
+                  <GlowBorder glowColor="rgba(0, 195, 255, 0.4)" hoverScale={1.01}>
                     <Button variant="tertiary" className="w-full">
                       Send Message
                     </Button>
