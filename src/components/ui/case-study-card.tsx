@@ -29,7 +29,7 @@ export function CaseStudyCard({
   return (
     <Card 
       className={cn(
-        "border-[#E8E0D5]/30 hover:border-[#E8E0D5] transition-all duration-300 hover:shadow-md overflow-hidden dark:border-[#333333]/50 dark:hover:border-[#333333]",
+        "border-primary-accent/20 hover:border-primary-accent/50 transition-all duration-300 hover:shadow-md overflow-hidden dark:border-primary-accent/30 dark:hover:border-primary-accent/60",
         className
       )} 
       {...props}
@@ -43,7 +43,7 @@ export function CaseStudyCard({
         />
       </div>
       <CardHeader>
-        <div className="text-sm font-mono text-foreground/70">{client}</div>
+        <div className="text-sm font-mono text-secondary-accent">{client}</div>
         <CardTitle className="text-xl font-serif">{title}</CardTitle>
         <CardDescription>{description}</CardDescription>
       </CardHeader>
@@ -53,7 +53,7 @@ export function CaseStudyCard({
             {tags.map((tag, index) => (
               <span 
                 key={index} 
-                className="px-2 py-1 text-xs font-mono bg-[#E8E0D5]/20 text-foreground rounded-md dark:bg-[#333333]/40"
+                className="px-2 py-1 text-xs font-mono bg-primary-accent/10 text-primary-accent rounded-md dark:bg-primary-accent/20"
               >
                 {tag}
               </span>
@@ -64,7 +64,7 @@ export function CaseStudyCard({
       <CardFooter>
         <Button 
           variant="link" 
-          className="p-0 font-mono text-foreground hover:text-foreground/80" 
+          className="p-0 font-mono text-primary-accent hover:text-primary-accent/80" 
           asChild
         >
           <a href={ctaHref} className="flex items-center gap-2">

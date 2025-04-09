@@ -21,13 +21,13 @@ const buttonVariants = cva(
           "hover:bg-accent hover:text-accent-foreground dark:hover:bg-accent/50",
         link: "text-primary underline-offset-4 hover:underline",
         primary: 
-          "bg-[#121212] text-[#F8F8F8] shadow-sm hover:bg-[#121212]/90 hover:scale-[0.98] transition-all duration-200 dark:bg-[#F8F8F8] dark:text-[#121212] dark:hover:bg-[#F8F8F8]/90",
+          "bg-primary-accent text-white shadow-sm hover:bg-primary-accent/90 hover:scale-[0.98] transition-all duration-200 dark:bg-primary-accent dark:text-white dark:hover:bg-primary-accent/90",
         tertiary: 
           "bg-[#E8E0D5] text-[#121212] shadow-sm hover:bg-[#E8E0D5]/90 hover:scale-[0.98] transition-all duration-200 dark:bg-[#333333] dark:text-[#F8F8F8] dark:hover:bg-[#333333]/80",
         primaryOutline:
-          "border border-[#121212] bg-transparent text-[#121212] shadow-sm hover:bg-[#121212]/5 hover:scale-[0.98] transition-all duration-200 dark:border-[#F8F8F8] dark:text-[#F8F8F8] dark:hover:bg-[#F8F8F8]/10",
+          "border border-primary-accent bg-transparent text-primary-accent shadow-sm hover:bg-primary-accent/5 hover:scale-[0.98] transition-all duration-200 dark:border-primary-accent dark:text-primary-accent dark:hover:bg-primary-accent/10",
         orange:
-          "bg-[#F5A47C] text-[#121212] shadow-md hover:bg-[#F5A47C]/90 hover:scale-[0.98] transition-all duration-200 font-medium border border-[#F5A47C] dark:bg-[#F5A47C] dark:text-[#121212] dark:hover:bg-[#F5A47C]/90",
+          "bg-secondary-accent text-white shadow-md hover:bg-secondary-accent/90 hover:scale-[0.98] transition-all duration-200 font-medium border border-secondary-accent dark:bg-secondary-accent dark:text-white dark:hover:bg-secondary-accent/90",
       },
       size: {
         default: "h-10 px-4 py-2",

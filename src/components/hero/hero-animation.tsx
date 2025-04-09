@@ -25,17 +25,17 @@ function DotField() {
         positions.push(x, 0, z);
         initialY.push(0); // Store initial Y position
 
-        // Light blue color with slight variation
-        const r = 0.6 + Math.random() * 0.1;
-        const g = 0.8 + Math.random() * 0.1;
-        const b = 0.95 + Math.random() * 0.05;
+        // Black color with slight variation
+        const r = 0.0 + Math.random() * 0.02; // Base R for black is 0
+        const g = 0.0 + Math.random() * 0.02; // Base G for black is 0
+        const b = 0.0 + Math.random() * 0.02; // Base B for black is 0
         colors.push(r, g, b);
       }
     }
 
     return {
       positions: new Float32Array(positions),
-      colors: new Float32Array(colors),
+      colors: new Float32Array(colors), // This holds the INITIAL colors
       initialY,
     };
   }, []);
@@ -52,10 +52,11 @@ function DotField() {
       colorRef.current = pointsRef.current.geometry.attributes.color as THREE.BufferAttribute;
     }
 
-    const colorArray = colorRef.current?.array;
+    // This is the array buffer we modify directly for GPU update
+    const currentFrameColorArray = colorRef.current?.array; 
 
     // Update each point's y position based on wave functions
-    for (let i = 0, j = 0; i < positionArray.length; i += 3, j++) {
+    for (let i = 0, colorIndex = 0, initialYIndex = 0; i < positionArray.length; i += 3, colorIndex += 3, initialYIndex++) {
       const x = positionArray[i];
       const z = positionArray[i + 2];
 
@@ -71,26 +72,27 @@ function DotField() {
 
       // Update color based on height (y-position)
       // Lower dots fade to black
-      if (colorArray) {
-        // Calculate the base color (light blue)
-        const baseR = 0.6 + Math.random() * 0.1;
-        const baseG = 0.8 + Math.random() * 0.1;
-        const baseB = 0.95 + Math.random() * 0.05;
+      if (currentFrameColorArray) {
+        // Get the INITIAL color set in useMemo for this dot
+        const initialR = colors[colorIndex];
+        const initialG = colors[colorIndex + 1];
+        const initialB = colors[colorIndex + 2];
 
         // Calculate fade factor based on height
-        // Higher values are brighter, lower values fade to black
+        // Higher values are brighter (closer to initial color), lower values fade to black
         const maxHeight = 4; // Maximum expected height of waves
         const minHeight = -4; // Minimum expected height of waves
         const heightRange = maxHeight - minHeight;
 
         // Normalize height to 0-1 range and apply curve for more dramatic effect
         const normalizedHeight = (newY - minHeight) / heightRange;
-        const fadeFactor = Math.pow(normalizedHeight, 1.5); // Apply power curve for more dramatic fade
+        // Increase exponent to make the fade to black more prominent
+        const fadeFactor = Math.pow(Math.max(0, Math.min(1, normalizedHeight)), 2.5); // Clamp normalizedHeight and apply steeper power curve
 
-        // Apply fade factor to colors (lower dots become black)
-        colorArray[i * 3] = baseR * fadeFactor; // R
-        colorArray[i * 3 + 1] = baseG * fadeFactor; // G
-        colorArray[i * 3 + 2] = baseB * fadeFactor; // B
+        // Apply fade factor to the INITIAL colors (lower dots become black/darker)
+        currentFrameColorArray[colorIndex] = initialR * fadeFactor; // R
+        currentFrameColorArray[colorIndex + 1] = initialG * fadeFactor; // G
+        currentFrameColorArray[colorIndex + 2] = initialB * fadeFactor; // B
       }
     }
 
@@ -126,13 +128,12 @@ function DotField() {
 
 export default function HeroAnimation() {
   return (
-    <div className="w-full h-full bg-black">
+    <div className="w-full h-full bg-[#f1d2b6]">
       <Canvas>
         <PerspectiveCamera makeDefault position={[0, 15, 30]} fov={60} />
         <ambientLight intensity={0.5} />
         <directionalLight position={[10, 10, 5]} intensity={1} />
         <DotField />
-        <fog attach="fog" args={["black", 20, 100]} />
       </Canvas>
     </div>
   );

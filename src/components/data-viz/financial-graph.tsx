@@ -7,8 +7,8 @@ import * as THREE from 'three';
 import { motion } from 'framer-motion';
 
 // Generate simulated financial data
-function generateFinancialData(numPoints = 50, volatility = 0.2): number[][] {
-  const points: number[][] = [];
+function generateFinancialData(numPoints = 50, volatility = 0.2): [number, number, number][] {
+  const points: [number, number, number][] = [];
   let value = 100; // Starting value
   
   for (let i = 0; i < numPoints; i++) {
@@ -23,14 +23,14 @@ function generateFinancialData(numPoints = 50, volatility = 0.2): number[][] {
 }
 
 interface Graph3DProps {
-  data: number[][];
+  data: [number, number, number][];
   color?: string;
   animated?: boolean;
 }
 
 function Graph3D({ data, color = '#E8E0D5', animated = true }: Graph3DProps) {
   const lineRef = useRef<THREE.Group>(null);
-  const [displayData, setDisplayData] = useState(data.slice(0, 2));
+  const [displayData, setDisplayData] = useState<[number, number, number][]>(() => data.length >= 2 ? data.slice(0, 2) : []);
   const [animationComplete, setAnimationComplete] = useState(false);
   
   // Animate the line drawing effect when component mounts
@@ -55,7 +55,7 @@ function Graph3D({ data, color = '#E8E0D5', animated = true }: Graph3DProps) {
   }, [data, animated, animationComplete]);
   
   // Gentle floating animation
-  useFrame((state, delta) => {
+  useFrame((state) => {
     if (lineRef.current && animationComplete) {
       lineRef.current.rotation.z = Math.sin(state.clock.elapsedTime * 0.3) * 0.05;
     }

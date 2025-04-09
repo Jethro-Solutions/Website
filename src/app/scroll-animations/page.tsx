@@ -218,7 +218,7 @@ export default function ScrollAnimationsDemo() {
           
           <ScaleFade delay={1}>
             <div className="inline-block bg-soft-tan text-soft-black px-8 py-4 rounded-lg font-mono">
-              Let's get started
+              Let&apos;s get started
             </div>
           </ScaleFade>
         </div>

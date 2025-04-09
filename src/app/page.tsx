@@ -26,7 +26,7 @@ export default function Home() {
         </div>
         <div className="relative z-10 py-24 px-4 md:px-8 lg:px-12 max-w-7xl mx-auto">
           <ScaleFade delay={0.3} duration={0.7} initialScale={0.9}>
-            <h1 className="text-4xl md:text-5xl lg:text-7xl font-serif font-bold mb-6">
+            <h1 className="text-4xl md:text-5xl lg:text-7xl font-serif font-bold mb-6 text-soft-black">
               Advanced Financial Technology Solutions
             </h1>
             <RevealText 
@@ -35,14 +35,14 @@ export default function Home() {
             />
             
             <div className="flex flex-col sm:flex-row gap-12 mb-16">
-              <GlowBorder glowColor="rgba(0, 195, 255, 0.4)" hoverScale={1.01}>
-                <Button variant="orange" size="lg">
+              <GlowBorder glowColor="rgba(79, 122, 146, 0.4)" hoverScale={1.01}>
+                <Button variant="primary" size="lg">
                   Explore Solutions
                 </Button>
               </GlowBorder>
               
-              <GlowBorder glowColor="rgba(0, 195, 255, 0.2)" hoverScale={1.01}>
-                <Button variant="tertiary" size="lg">
+              <GlowBorder glowColor="rgba(219, 79, 36, 0.4)" hoverScale={1.01}>
+                <Button variant="orange" size="lg">
                   Request a Demo
                 </Button>
               </GlowBorder>
@@ -59,7 +59,7 @@ export default function Home() {
               <div>
                 <RevealText 
                   text="About Jethro Solutions"
-                  className="text-3xl md:text-4xl font-serif font-bold mb-6"
+                  className="text-3xl md:text-4xl font-serif font-bold mb-6 text-primary-accent"
                 />
                 <ScrollOpacity className="text-lg mb-6">
                   <p>
@@ -74,29 +74,29 @@ export default function Home() {
                     of technological innovation.
                   </p>
                 </ScrollOpacity>
-                <GlowBorder glowColor="rgba(18, 18, 18, 0.2)" hoverScale={1.01}>
-                  <Button variant="secondary" size="lg" className="flex items-center gap-2">
+                <GlowBorder glowColor="rgba(79, 122, 146, 0.3)" hoverScale={1.01}>
+                  <Button variant="primary" size="lg" className="flex items-center gap-2">
                     Our Story <ArrowRight className="size-4" />
                   </Button>
                 </GlowBorder>
               </div>
-              <Rotate3D className="bg-soft-tan p-8 rounded-lg" maxRotation={5}>
-                <h3 className="text-2xl font-serif font-bold mb-4">Our Mission</h3>
+              <Rotate3D className="bg-primary-accent/10 p-8 rounded-lg" maxRotation={5}>
+                <h3 className="text-2xl font-serif font-bold mb-4 text-primary-accent">Our Mission</h3>
                 <p className="text-lg font-medium italic mb-8">
                   &quot;To empower financial institutions with technology that transforms data into strategic advantage and 
                   enables confident decision-making in a rapidly evolving landscape.&quot;
                 </p>
                 <div className="flex flex-col gap-4">
                   <div className="flex items-center gap-3">
-                    <div className="size-2 rounded-full bg-soft-black"></div>
+                    <div className="size-2 rounded-full bg-primary-accent"></div>
                     <p className="font-medium">Innovation-driven solutions</p>
                   </div>
                   <div className="flex items-center gap-3">
-                    <div className="size-2 rounded-full bg-soft-black"></div>
+                    <div className="size-2 rounded-full bg-primary-accent"></div>
                     <p className="font-medium">Expert financial analysis</p>
                   </div>
                   <div className="flex items-center gap-3">
-                    <div className="size-2 rounded-full bg-soft-black"></div>
+                    <div className="size-2 rounded-full bg-primary-accent"></div>
                     <p className="font-medium">Secure and reliable technology</p>
                   </div>
                 </div>
@@ -110,7 +110,7 @@ export default function Home() {
       <section className="py-24 px-4 md:px-8 lg:px-12 bg-soft-black text-soft-white">
         <div className="max-w-7xl mx-auto">
           <ParallaxSection direction="up" speed={0.3} className="mb-16">
-            <h2 className="text-3xl md:text-4xl font-serif font-bold mb-4 text-center">Our Solutions</h2>
+            <h2 className="text-3xl md:text-4xl font-serif font-bold mb-4 text-center text-primary-accent">Our Solutions</h2>
             <p className="text-lg text-center max-w-3xl mx-auto">
               Comprehensive financial technology solutions tailored to your specific business needs and challenges
             </p>
@@ -149,7 +149,7 @@ export default function Home() {
       <section className="py-24 px-4 md:px-8 lg:px-12 bg-soft-tan">
         <div className="max-w-7xl mx-auto">
           <ScrollOpacity className="mb-16" startPercentage={0.1} endPercentage={0.4}>
-            <h2 className="text-3xl md:text-4xl font-serif font-bold mb-4 text-center">Why Choose Jethro Solutions</h2>
+            <h2 className="text-3xl md:text-4xl font-serif font-bold mb-4 text-center text-primary-accent">Why Choose Jethro Solutions</h2>
             <p className="text-lg text-center max-w-3xl mx-auto">
               Our unique approach combines financial expertise with cutting-edge technology to deliver exceptional results
             </p>
@@ -158,25 +158,25 @@ export default function Home() {
           <ScaleFade staggerChildren={true} staggerDelay={0.1}>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
               <Card className="p-8 border-none shadow-lg">
-                <Zap className="size-12 mb-4 text-soft-black" />
+                <Zap className="size-12 mb-4 text-secondary-accent" />
                 <h3 className="text-xl font-serif font-bold mb-3">Rapid Implementation</h3>
                 <p>Our solutions are designed for quick deployment with minimal disruption to your existing systems.</p>
               </Card>
               
               <Card className="p-8 border-none shadow-lg">
-                <Lock className="size-12 mb-4 text-soft-black" />
+                <Lock className="size-12 mb-4 text-secondary-accent" />
                 <h3 className="text-xl font-serif font-bold mb-3">Enterprise Security</h3>
                 <p>Bank-grade security protocols and compliance with industry regulations to protect sensitive financial data.</p>
               </Card>
               
               <Card className="p-8 border-none shadow-lg">
-                <Brain className="size-12 mb-4 text-soft-black" />
+                <Brain className="size-12 mb-4 text-secondary-accent" />
                 <h3 className="text-xl font-serif font-bold mb-3">Advanced AI Integration</h3>
                 <p>Cutting-edge artificial intelligence technologies that adapt to market changes and improve over time.</p>
               </Card>
               
               <Card className="p-8 border-none shadow-lg">
-                <BarChart3 className="size-12 mb-4 text-soft-black" />
+                <BarChart3 className="size-12 mb-4 text-secondary-accent" />
                 <h3 className="text-xl font-serif font-bold mb-3">Data-Driven Insights</h3>
                 <p>Transform complex financial data into clear, actionable insights that drive strategic decision-making.</p>
               </Card>
@@ -186,19 +186,19 @@ export default function Home() {
                 <p className="mb-4">Our team combines decades of experience in both finance and technology.</p>
                 <div className="grid grid-cols-2 gap-4 mt-4">
                   <div className="flex items-center gap-2">
-                    <div className="size-2 rounded-full bg-soft-black"></div>
+                    <div className="size-2 rounded-full bg-primary-accent"></div>
                     <p>Investment Banking</p>
                   </div>
                   <div className="flex items-center gap-2">
-                    <div className="size-2 rounded-full bg-soft-black"></div>
+                    <div className="size-2 rounded-full bg-primary-accent"></div>
                     <p>Asset Management</p>
                   </div>
                   <div className="flex items-center gap-2">
-                    <div className="size-2 rounded-full bg-soft-black"></div>
+                    <div className="size-2 rounded-full bg-primary-accent"></div>
                     <p>Hedge Funds</p>
                   </div>
                   <div className="flex items-center gap-2">
-                    <div className="size-2 rounded-full bg-soft-black"></div>
+                    <div className="size-2 rounded-full bg-primary-accent"></div>
                     <p>Fintech Innovation</p>
                   </div>
                 </div>
@@ -212,7 +212,7 @@ export default function Home() {
       <section className="py-24 px-4 md:px-8 lg:px-12 bg-soft-white">
         <div className="max-w-7xl mx-auto">
           <ParallaxSection direction="up" speed={0.2}>
-            <h2 className="text-3xl md:text-4xl font-serif font-bold mb-8 text-center">
+            <h2 className="text-3xl md:text-4xl font-serif font-bold mb-8 text-center text-primary-accent">
               What Our Clients Say
             </h2>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
@@ -250,40 +250,40 @@ export default function Home() {
               <div>
                 <RevealText 
                   text="Ready to Transform Your Financial Technology?"
-                  className="text-3xl md:text-4xl font-serif font-bold mb-6"
+                  className="text-3xl md:text-4xl font-serif font-bold mb-6 text-primary-accent"
                 />
                 <p className="text-lg mb-6">
                   Schedule a personalized demonstration to see how our solutions can address your specific challenges and opportunities.
                 </p>
                 <ul className="mb-8 space-y-3">
                   <li className="flex items-center gap-3">
-                    <div className="size-2 rounded-full bg-soft-tan"></div>
+                    <div className="size-2 rounded-full bg-secondary-accent"></div>
                     <p>Customized demonstration of relevant solutions</p>
                   </li>
                   <li className="flex items-center gap-3">
-                    <div className="size-2 rounded-full bg-soft-tan"></div>
+                    <div className="size-2 rounded-full bg-secondary-accent"></div>
                     <p>Assessment of your current technology setup</p>
                   </li>
                   <li className="flex items-center gap-3">
-                    <div className="size-2 rounded-full bg-soft-tan"></div>
+                    <div className="size-2 rounded-full bg-secondary-accent"></div>
                     <p>Clear pricing and implementation roadmap</p>
                   </li>
                 </ul>
-                <GlowBorder glowColor="rgba(0, 195, 255, 0.4)" hoverScale={1.01}>
+                <GlowBorder glowColor="rgba(219, 79, 36, 0.4)" hoverScale={1.01}>
                   <Button variant="orange" size="lg">
                     Request Demo
                   </Button>
                 </GlowBorder>
               </div>
               
-              <div className="bg-soft-white bg-opacity-10 p-8 rounded-lg">
-                <h3 className="text-2xl font-serif font-bold mb-6">Contact Us</h3>
+              <div className="bg-soft-white bg-opacity-10 p-8 rounded-lg border border-primary-accent/20">
+                <h3 className="text-2xl font-serif font-bold mb-6 text-primary-accent">Contact Us</h3>
                 <div className="space-y-6">
                   <div>
                     <label className="block mb-2 font-medium">Name</label>
                     <input 
                       type="text" 
-                      className="w-full p-3 bg-transparent border border-soft-tan/30 rounded-md focus:outline-none focus:ring-1 focus:ring-soft-tan/50"
+                      className="w-full p-3 bg-transparent border border-primary-accent/30 rounded-md focus:outline-none focus:ring-1 focus:ring-primary-accent/50"
                       placeholder="Your name"
                     />
                   </div>
@@ -291,19 +291,19 @@ export default function Home() {
                     <label className="block mb-2 font-medium">Email</label>
                     <input 
                       type="email" 
-                      className="w-full p-3 bg-transparent border border-soft-tan/30 rounded-md focus:outline-none focus:ring-1 focus:ring-soft-tan/50"
+                      className="w-full p-3 bg-transparent border border-primary-accent/30 rounded-md focus:outline-none focus:ring-1 focus:ring-primary-accent/50"
                       placeholder="your.email@company.com"
                     />
                   </div>
                   <div>
                     <label className="block mb-2 font-medium">Message</label>
                     <textarea 
-                      className="w-full p-3 bg-transparent border border-soft-tan/30 rounded-md focus:outline-none focus:ring-1 focus:ring-soft-tan/50 min-h-24"
+                      className="w-full p-3 bg-transparent border border-primary-accent/30 rounded-md focus:outline-none focus:ring-1 focus:ring-primary-accent/50 min-h-24"
                       placeholder="Tell us about your needs"
                     ></textarea>
                   </div>
-                  <GlowBorder glowColor="rgba(0, 195, 255, 0.4)" hoverScale={1.01}>
-                    <Button variant="tertiary" className="w-full">
+                  <GlowBorder glowColor="rgba(219, 79, 36, 0.4)" hoverScale={1.01}>
+                    <Button variant="orange" className="w-full">
                       Send Message
                     </Button>
                   </GlowBorder>

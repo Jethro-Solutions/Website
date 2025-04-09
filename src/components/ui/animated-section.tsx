@@ -4,14 +4,10 @@ import type { HTMLAttributes } from "react";
 
 interface AnimatedSectionProps extends HTMLAttributes<HTMLDivElement> {
   children: React.ReactNode;
-  delay?: number;
-  direction?: "up" | "down" | "left" | "right";
 }
 
 export function AnimatedSection({
   children,
-  delay = 0,
-  direction = "up",
   className,
   ...props
 }: AnimatedSectionProps) {
@@ -25,12 +21,10 @@ export function AnimatedSection({
 
 interface StaggeredContainerProps extends HTMLAttributes<HTMLDivElement> {
   children: React.ReactNode;
-  staggerDelay?: number;
 }
 
 export function StaggeredContainer({
   children,
-  staggerDelay = 0.1,
   className,
   ...props
 }: StaggeredContainerProps) {

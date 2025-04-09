@@ -1,6 +1,6 @@
 'use client';
 
-import { useRef, useMemo, useEffect } from 'react';
+import { useRef, useMemo } from 'react';
 import { Canvas, useFrame } from '@react-three/fiber';
 import { OrbitControls } from '@react-three/drei';
 import * as THREE from 'three';
@@ -11,7 +11,7 @@ function GeometricShapes({ color = '#F5A47C' }) {
   
   // Create multiple geometric objects
   const geometries = useMemo(() => {
-    return Array.from({ length: 20 }, (_, i) => ({
+    return Array.from({ length: 20 }, () => ({
       position: [
         (Math.random() - 0.5) * 8,
         (Math.random() - 0.5) * 8,

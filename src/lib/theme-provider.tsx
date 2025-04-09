@@ -1,13 +1,13 @@
 "use client"
 
-import React, { createContext, useContext, useEffect, useState } from "react"
-import { getSystemTheme } from "./utils"
+import React, { createContext, useContext, useEffect } from "react"
+// import { getSystemTheme } from "./utils" // Removed unused import
 
 type Theme = "dark" | "light" | "system"
 
 interface ThemeProviderProps {
   children: React.ReactNode
-  defaultTheme?: Theme
+  defaultTheme?: Theme // Keep in interface for potential future use, but not used below
   storageKey?: string
 }
 
@@ -21,31 +21,29 @@ const ThemeContext = createContext<ThemeContextValue | undefined>(undefined)
 
 export function ThemeProvider({
   children,
-  defaultTheme = "dark",
+  // defaultTheme = "dark", // Removed unused prop destructuring
   storageKey = "jethro-theme",
   ...props
 }: ThemeProviderProps) {
-  const [theme, setTheme] = useState<Theme>("dark")
-  const [isDarkMode, setIsDarkMode] = useState<boolean>(true)
+  // const [theme, setTheme] = useState<Theme>("dark") // Removed unused state
+  // const [isDarkMode, setIsDarkMode] = useState<boolean>(true) // Removed unused state
 
   useEffect(() => {
     const root = window.document.documentElement
     
-    // Remove light class if it exists
     root.classList.remove("light")
     
-    // Add dark class
     if (!root.classList.contains("dark")) {
       root.classList.add("dark")
     }
     
-    // Always set to dark in storage
     localStorage.setItem(storageKey, "dark")
   }, [storageKey])
 
+  // Hardcoded value as the theme switching logic is currently disabled
   const value = {
     theme: "dark" as Theme,
-    setTheme: () => {},
+    setTheme: () => { console.warn("Theme switching is currently disabled.") }, // Provide a no-op setter
     isDarkMode: true
   }
 

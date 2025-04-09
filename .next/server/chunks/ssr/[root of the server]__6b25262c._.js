@@ -23,25 +23,26 @@ var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist
 ;
 ;
 const ThemeContext = /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["createContext"])(undefined);
-function ThemeProvider({ children, defaultTheme = "dark", storageKey = "jethro-theme", ...props }) {
-    const [theme, setTheme] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useState"])("dark");
-    const [isDarkMode, setIsDarkMode] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useState"])(true);
+function ThemeProvider({ children, // defaultTheme = "dark", // Removed unused prop destructuring
+storageKey = "jethro-theme", ...props }) {
+    // const [theme, setTheme] = useState<Theme>("dark") // Removed unused state
+    // const [isDarkMode, setIsDarkMode] = useState<boolean>(true) // Removed unused state
     (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useEffect"])(()=>{
         const root = window.document.documentElement;
-        // Remove light class if it exists
         root.classList.remove("light");
-        // Add dark class
         if (!root.classList.contains("dark")) {
             root.classList.add("dark");
         }
-        // Always set to dark in storage
         localStorage.setItem(storageKey, "dark");
     }, [
         storageKey
     ]);
+    // Hardcoded value as the theme switching logic is currently disabled
     const value = {
         theme: "dark",
-        setTheme: ()=>{},
+        setTheme: ()=>{
+            console.warn("Theme switching is currently disabled.");
+        },
         isDarkMode: true
     };
     return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(ThemeContext.Provider, {
@@ -50,7 +51,7 @@ function ThemeProvider({ children, defaultTheme = "dark", storageKey = "jethro-t
         children: children
     }, void 0, false, {
         fileName: "[project]/src/lib/theme-provider.tsx",
-        lineNumber: 53,
+        lineNumber: 51,
         columnNumber: 5
     }, this);
 }

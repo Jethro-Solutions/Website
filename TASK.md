@@ -258,3 +258,13 @@
 - Ensure sufficient color contrast
 - Provide alt text for all images
 - Support keyboard navigation
+
+## 📝 Discovered During Work
+
+### Task D.1: Color Scheme Update
+- [x] Update tailwind.config.js to include new primary accent color (#4f7a92) and secondary accent color (#db4f24)
+- [x] Update button component to use new color scheme
+- [x] Update card components to use new color scheme
+- [x] Apply color changes to service-card and case-study-card components
+- [x] Apply color scheme to page.tsx with new accent colors
+- [x] Update globals.css to use new accent colors for all CSS variables

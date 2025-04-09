@@ -33,7 +33,7 @@ export function Testimonial({
     >
       <Quote className="absolute top-6 left-6 size-6 text-[#E8E0D5]/70 dark:text-[#333333]/70" />
       <div className="mt-8 mb-6 text-lg font-serif">
-        "{quote}"
+        &quot;{quote}&quot;
       </div>
       <div className="flex items-center gap-4">
         {avatarSrc && (

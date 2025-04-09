@@ -2,7 +2,6 @@
 
 import React from "react";
 import Link from "next/link";
-import { cn } from "@/lib/utils";
 
 // Footer Column interface
 interface FooterColumn {

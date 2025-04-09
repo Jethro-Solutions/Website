@@ -1,16 +1,27 @@
 'use client';
 
-import { useRef, useMemo } from 'react';
+import React, { useEffect, useRef, useContext, useMemo } from 'react';
 import { Canvas, useFrame } from '@react-three/fiber';
 import { OrbitControls, Line } from '@react-three/drei';
 import * as THREE from 'three';
+
+interface NodeData {
+  position: number[];
+  velocity: number[];
+  connections: number[];
+  size: number;
+}
+
+interface Connection {
+  start: number[];
+  end: number[];
+}
 
 function NodeNetwork({ color = '#F5A47C', nodeCount = 25, maxConnections = 50 }) {
   const nodesRef = useRef<THREE.Group>(null);
   const connectionsRef = useRef<THREE.Group>(null);
   
-  // Create nodes
-  const nodes = useMemo(() => {
+  const nodes = useMemo<NodeData[]>(() => {
     return Array.from({ length: nodeCount }, () => ({
       position: [
         (Math.random() - 0.5) * 10,
@@ -27,8 +38,7 @@ function NodeNetwork({ color = '#F5A47C', nodeCount = 25, maxConnections = 50 })
     }));
   }, [nodeCount]);
   
-  // Create connections between nodes
-  const connections = useMemo(() => {
+  const connections = useMemo<Connection[]>(() => {
     const lines: { start: number[]; end: number[] }[] = [];
     
     // Find closest nodes and connect them
@@ -73,11 +83,10 @@ function NodeNetwork({ color = '#F5A47C', nodeCount = 25, maxConnections = 50 })
     return lines;
   }, [nodes, maxConnections]);
   
-  // Animation loop
   useFrame((state, delta) => {
     if (nodesRef.current && connectionsRef.current) {
       // Move nodes
-      nodesRef.current.children.forEach((node, i) => {
+      nodesRef.current.children.forEach((nodeMesh, i) => {
         const nodeData = nodes[i];
         
         // Update position
@@ -91,40 +100,46 @@ function NodeNetwork({ color = '#F5A47C', nodeCount = 25, maxConnections = 50 })
         }
         
         // Update mesh position
-        node.position.set(
+        nodeMesh.position.set(
           nodeData.position[0],
           nodeData.position[1],
           nodeData.position[2]
         );
       });
       
-      // Update connections
-      connectionsRef.current.children.forEach((line, i) => {
-        const connection = connections[i];
-        const startNode = nodes[nodes.findIndex(n => 
+      connectionsRef.current.children.forEach((lineObject) => {
+        const line = lineObject as THREE.Line;
+        const connection = connections.find(c => 
+           line.geometry.attributes.position.array[0] === c.start[0] &&
+           line.geometry.attributes.position.array[1] === c.start[1] &&
+           line.geometry.attributes.position.array[2] === c.start[2] 
+        );
+        
+        if (!connection) return;
+
+        const startNode = nodes.find(n => 
           n.position[0] === connection.start[0] && 
           n.position[1] === connection.start[1] && 
           n.position[2] === connection.start[2]
-        )];
+        );
         
-        const endNode = nodes[nodes.findIndex(n => 
+        const endNode = nodes.find(n => 
           n.position[0] === connection.end[0] && 
           n.position[1] === connection.end[1] && 
           n.position[2] === connection.end[2]
-        )];
+        );
         
         if (startNode && endNode) {
-          // Update line positions
           const linePoints = [
             new THREE.Vector3(startNode.position[0], startNode.position[1], startNode.position[2]),
             new THREE.Vector3(endNode.position[0], endNode.position[1], endNode.position[2])
           ];
           
-          (line as any).geometry.setFromPoints(linePoints);
+          line.geometry.setFromPoints(linePoints);
+          line.geometry.attributes.position.needsUpdate = true;
         }
       });
       
-      // Rotate entire network slowly
       nodesRef.current.rotation.y += delta * 0.05;
       connectionsRef.current.rotation.y += delta * 0.05;
     }
@@ -174,10 +189,7 @@ interface ConnectedNodesProps {
   className?: string;
 }
 
-export default function ConnectedNodes({
-  color = '#F5A47C',
-  className = 'w-full h-screen'
-}: ConnectedNodesProps) {
+export function ConnectedNodes({ className, color }: ConnectedNodesProps) {
   return (
     <div className={`${className} bg-soft-black`}>
       <Canvas dpr={[1, 2]} camera={{ position: [0, 0, 15], fov: 40 }}>

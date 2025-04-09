@@ -6,10 +6,17 @@ import {
   FloatingCubesBackground,
   WaveBackground,
   ConnectedNodes,
-  SpiralParticlesBackground
+  SpiralParticlesBackground,
+  FloatingNodesBackground,
+  CanvasRevealEffect
 } from '@/components/background';
 
 const BACKGROUNDS = [
+  {
+    name: 'Canvas Reveal',
+    component: CanvasRevealEffect,
+    description: 'Animated dot matrix with reveal effect'
+  },
   {
     name: 'Geometric Shapes',
     component: GeometricBackground,
@@ -34,6 +41,11 @@ const BACKGROUNDS = [
     name: 'Spiral Particles',
     component: SpiralParticlesBackground,
     description: 'Particles arranged in a spiral pattern with wave motion'
+  },
+  {
+    name: 'Floating Nodes',
+    component: FloatingNodesBackground,
+    description: 'Orange nodes moving in horizontal waves like a living organism'
   }
 ];
 

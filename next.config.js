@@ -1,9 +1,15 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   reactStrictMode: true,
-  swcMinify: true,
   experimental: {
-    // Any experimental features can go here
+    // Disable advanced features that might cause issues
+    typedRoutes: false,
+  },
+  serverExternalPackages: [],
+  webpack: (config) => {
+    // Add optimization
+    config.optimization.moduleIds = 'deterministic';
+    return config;
   },
 }
 

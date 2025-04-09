@@ -16,28 +16,29 @@ var _s = __turbopack_context__.k.signature(), _s1 = __turbopack_context__.k.sign
 "use client";
 ;
 const ThemeContext = /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["createContext"])(undefined);
-function ThemeProvider({ children, defaultTheme = "dark", storageKey = "jethro-theme", ...props }) {
+function ThemeProvider({ children, // defaultTheme = "dark", // Removed unused prop destructuring
+storageKey = "jethro-theme", ...props }) {
     _s();
-    const [theme, setTheme] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])("dark");
-    const [isDarkMode, setIsDarkMode] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])(true);
+    // const [theme, setTheme] = useState<Theme>("dark") // Removed unused state
+    // const [isDarkMode, setIsDarkMode] = useState<boolean>(true) // Removed unused state
     (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useEffect"])({
         "ThemeProvider.useEffect": ()=>{
             const root = window.document.documentElement;
-            // Remove light class if it exists
             root.classList.remove("light");
-            // Add dark class
             if (!root.classList.contains("dark")) {
                 root.classList.add("dark");
             }
-            // Always set to dark in storage
             localStorage.setItem(storageKey, "dark");
         }
     }["ThemeProvider.useEffect"], [
         storageKey
     ]);
+    // Hardcoded value as the theme switching logic is currently disabled
     const value = {
         theme: "dark",
-        setTheme: ()=>{},
+        setTheme: ()=>{
+            console.warn("Theme switching is currently disabled.");
+        },
         isDarkMode: true
     };
     return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(ThemeContext.Provider, {
@@ -46,11 +47,11 @@ function ThemeProvider({ children, defaultTheme = "dark", storageKey = "jethro-t
         children: children
     }, void 0, false, {
         fileName: "[project]/src/lib/theme-provider.tsx",
-        lineNumber: 53,
+        lineNumber: 51,
         columnNumber: 5
     }, this);
 }
-_s(ThemeProvider, "PWlbp3Qfra9wG9Uh5k+qji7EgcY=");
+_s(ThemeProvider, "OD7bBpZva5O2jO+Puf00hKivP7c=");
 _c = ThemeProvider;
 const useTheme = ()=>{
     _s1();

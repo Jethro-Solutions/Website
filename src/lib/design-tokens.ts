@@ -5,7 +5,7 @@
 
 export const colors = {
   softBlack: '#121212',
-  softWhite: '#F8F8F8',
+  softWhite: '#f1d2b6',
   softTan: '#E8E0D5',
   softOrange: '#F5A47C', // Adding subtle orange color
   
