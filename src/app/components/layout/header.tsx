@@ -2,6 +2,7 @@
 
 import React, { useState } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { motion } from "framer-motion";
 import { cn } from "@/lib/utils";
@@ -28,8 +29,26 @@ export default function Header() {
       <div className="max-w-7xl mx-auto flex items-center justify-between">
         {/* Logo */}
         <Link href="/" className="flex items-center">
-          <span className="font-serif text-2xl font-bold">Jethro</span>
-          <span className="font-mono ml-1 text-sm">Solutions</span>
+          <div className="flex items-center">
+            <Image 
+              src="/logos/file.svg" 
+              alt="Jethro Logo" 
+              width={40} 
+              height={40} 
+              className="mr-2"
+            />
+            <Image 
+              src="/logos/file (1).svg" 
+              alt="Jethro Secondary Logo" 
+              width={30} 
+              height={30} 
+              className="mr-2"
+            />
+            <div className="flex flex-col">
+              <span className="font-serif text-2xl font-bold">Jethro</span>
+              <span className="font-mono text-sm">Solutions</span>
+            </div>
+          </div>
         </Link>
 
         {/* Desktop Navigation */}

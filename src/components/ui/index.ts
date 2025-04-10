@@ -9,6 +9,8 @@ export * from './input';
 export * from './label';
 export * from './select';
 export { ServiceCard } from './service-card';
+export { StarBorder } from './star-border';
+export { StarBorderDemo } from './star-border-demo';
 export { Testimonial } from './testimonial';
 export * from './textarea';
 export { TestComponent } from './test-component';

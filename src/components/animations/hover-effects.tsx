@@ -203,7 +203,7 @@ export function GlowBorder({
   
   return (
     <motion.div
-      className={`relative rounded-xl overflow-hidden ${className}`}
+      className={`relative rounded-xl ${className}`}
       onHoverStart={() => setIsHovered(true)}
       onHoverEnd={() => setIsHovered(false)}
       whileHover={{ scale: hoverScale }}
@@ -211,16 +211,16 @@ export function GlowBorder({
     >
       {/* Glow border effect */}
       <motion.div
-        className="absolute inset-0 rounded-xl pointer-events-none"
+        className="absolute inset-0 rounded-xl pointer-events-none z-0"
         initial={{ 
-          boxShadow: `0 0 0 1px ${glowColor.replace('0.9', '0')}` 
+          boxShadow: `0 0 10px 2px ${glowColor.replace(/,[^,]+$/, ',0.3)')}`
         }}
         animate={{ 
           boxShadow: isHovered 
-            ? `0 0 30px 5px ${glowColor}, 0 0 0 2px ${glowColor}`
-            : `0 0 0 1px ${glowColor.replace('0.9', '0')}`
+            ? `0 0 30px 8px ${glowColor}, 0 0 0 2px ${glowColor}`
+            : `0 0 10px 2px ${glowColor.replace(/,[^,]+$/, ',0.3)')}`
         }}
-        transition={{ duration: 0.4 }}
+        transition={{ duration: 0.3 }}
       />
       
       {/* Content */}

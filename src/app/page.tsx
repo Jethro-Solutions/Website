@@ -2,10 +2,11 @@ import BaseLayout from "./components/layout/base-layout";
 import { Button } from "@/components/ui/button";
 import { ServiceCard } from "@/components/ui/service-card";
 import { Testimonial } from "@/components/ui/testimonial";
-import { BarChart3, Shield, Cpu, Code, ArrowRight, Zap, Lock, Brain } from "lucide-react";
+import { BarChart3, Shield, Cpu, Code, ArrowRight, Zap, Lock, Brain, MessagesSquare } from "lucide-react";
 import { Card } from "@/components/ui/card";
 import { GlowBorder } from "@/components/animations/hover-effects";
 import HeroAnimation from "@/components/hero/hero-animation";
+import { TextShimmer } from "@/components/ui/text-shimmer";
 import { 
   FadeInSection, 
   ParallaxSection, 
@@ -26,23 +27,35 @@ export default function Home() {
         </div>
         <div className="relative z-10 py-24 px-4 md:px-8 lg:px-12 max-w-7xl mx-auto">
           <ScaleFade delay={0.3} duration={0.7} initialScale={0.9}>
-            <h1 className="text-4xl md:text-5xl lg:text-7xl font-serif font-bold mb-6">
-              Advanced Financial Technology Solutions
-            </h1>
+            <TextShimmer as="h1" className="text-4xl md:text-5xl lg:text-7xl font-serif font-bold mb-6" duration={3} spread={3}>
+              Jethro Solutions
+            </TextShimmer>
             <RevealText 
               text="Empowering forward-facing financial institutions with cutting-edge technology and data-driven insights"
               className="text-xl md:text-2xl font-mono text-muted-foreground mb-12 max-w-3xl"
             />
             
-            <div className="flex flex-col sm:flex-row gap-12 mb-16">
-              <GlowBorder glowColor="rgba(0, 195, 255, 0.4)" hoverScale={1.01}>
-                <Button variant="orange" size="lg">
+            <div className="flex flex-col sm:flex-row gap-6 sm:gap-8 mb-16">
+              <GlowBorder glowColor="rgba(37, 99, 235, 0.7)" hoverScale={1.03}>
+                <Button 
+                  variant="solid-blue" 
+                  size="lg" 
+                  className="w-full sm:w-auto min-w-[180px] justify-center font-medium"
+                  icon={<ArrowRight className="size-4" />}
+                  iconPosition="right"
+                >
                   Explore Solutions
                 </Button>
               </GlowBorder>
               
-              <GlowBorder glowColor="rgba(0, 195, 255, 0.2)" hoverScale={1.01}>
-                <Button variant="tertiary" size="lg">
+              <GlowBorder glowColor="rgba(37, 99, 235, 0.6)" hoverScale={1.03}>
+                <Button 
+                  variant="glass" 
+                  size="lg"
+                  className="w-full sm:w-auto min-w-[180px] justify-center font-medium"
+                  icon={<MessagesSquare className="size-4" />}
+                  iconPosition="right"
+                >
                   Request a Demo
                 </Button>
               </GlowBorder>
@@ -74,9 +87,15 @@ export default function Home() {
                     of technological innovation.
                   </p>
                 </ScrollOpacity>
-                <GlowBorder glowColor="rgba(18, 18, 18, 0.2)" hoverScale={1.01}>
-                  <Button variant="secondary" size="lg" className="flex items-center gap-2">
-                    Our Story <ArrowRight className="size-4" />
+                <GlowBorder glowColor="rgba(37, 99, 235, 0.6)" hoverScale={1.03}>
+                  <Button 
+                    variant="glass" 
+                    size="lg" 
+                    className="justify-center font-medium text-slate-800"
+                    icon={<ArrowRight className="size-4" />}
+                    iconPosition="right"
+                  >
+                    Our Story
                   </Button>
                 </GlowBorder>
               </div>
@@ -269,8 +288,14 @@ export default function Home() {
                     <p>Clear pricing and implementation roadmap</p>
                   </li>
                 </ul>
-                <GlowBorder glowColor="rgba(0, 195, 255, 0.4)" hoverScale={1.01}>
-                  <Button variant="orange" size="lg">
+                <GlowBorder glowColor="rgba(37, 99, 235, 0.7)" hoverScale={1.03}>
+                  <Button 
+                    variant="glass" 
+                    size="lg"
+                    className="min-w-[180px] justify-center font-medium"
+                    icon={<MessagesSquare className="size-4" />}
+                    iconPosition="right"
+                  >
                     Request Demo
                   </Button>
                 </GlowBorder>
@@ -302,8 +327,14 @@ export default function Home() {
                       placeholder="Tell us about your needs"
                     ></textarea>
                   </div>
-                  <GlowBorder glowColor="rgba(0, 195, 255, 0.4)" hoverScale={1.01}>
-                    <Button variant="tertiary" className="w-full">
+                  <GlowBorder glowColor="rgba(37, 99, 235, 0.7)" hoverScale={1.03}>
+                    <Button 
+                      variant="glass" 
+                      size="lg"
+                      className="w-full justify-center font-medium"
+                      icon={<ArrowRight className="size-4" />}
+                      iconPosition="right"
+                    >
                       Send Message
                     </Button>
                   </GlowBorder>

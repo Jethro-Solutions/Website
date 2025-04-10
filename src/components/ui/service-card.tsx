@@ -1,8 +1,11 @@
+"use client"
+
 import React from "react";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "./card";
 import { Button } from "./button";
 import { cn } from "@/lib/utils";
 import { ArrowRight } from "lucide-react";
+import Link from "next/link";
 
 interface ServiceCardProps extends React.ComponentProps<typeof Card> {
   title: string;
@@ -40,9 +43,9 @@ export function ServiceCard({
           className="p-0 font-mono text-foreground hover:text-foreground/80" 
           asChild
         >
-          <a href={ctaHref} className="flex items-center gap-2">
+          <Link href={ctaHref} className="flex items-center gap-2">
             {ctaText} <ArrowRight className="size-4" />
-          </a>
+          </Link>
         </Button>
       </CardFooter>
     </Card>

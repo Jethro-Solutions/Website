@@ -6,6 +6,9 @@ import { ThemeProvider } from "@/lib/theme-provider";
 export const metadata: Metadata = {
   title: "Jethro Solutions",
   description: "Financial technology solutions for the modern world",
+  icons: {
+    icon: '/logos/file (1).svg',
+  },
 };
 
 export default function RootLayout({
