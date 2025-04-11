@@ -1,6 +1,6 @@
-
 import React from 'react';
 import { Quote } from 'lucide-react';
+import { GridBackground } from './Hero';
 
 interface TestimonialProps {
   quote: string;
@@ -10,12 +10,12 @@ interface TestimonialProps {
 
 const TestimonialCard: React.FC<TestimonialProps> = ({ quote, author, position }) => {
   return (
-    <div className="bg-jethro-cream p-8 rounded-lg shadow-sm border border-jethro-gray/20">
-      <Quote className="text-jethro-blue mb-4 opacity-40" size={32} />
-      <p className="text-jethro-black/80 leading-relaxed mb-6 italic">{quote}</p>
+    <div className="bg-gray-100 p-8 rounded-lg shadow-sm border border-gray-200">
+      <Quote className="text-jethro-blue mb-4" size={32} />
+      <p className="text-gray-700 leading-relaxed mb-6 italic">{quote}</p>
       <div>
-        <p className="font-medium text-jethro-black">{author}</p>
-        <p className="text-jethro-black/60 text-sm">{position}</p>
+        <p className="font-medium text-gray-900">{author}</p>
+        <p className="text-gray-600 text-sm">{position}</p>
       </div>
     </div>
   );
@@ -23,14 +23,15 @@ const TestimonialCard: React.FC<TestimonialProps> = ({ quote, author, position }
 
 const Testimonials: React.FC = () => {
   return (
-    <section id="testimonials" className="section-padding bg-jethro-sage/20">
-      <div className="container mx-auto">
+    <section id="testimonials" className="section-padding bg-[#111827] relative">
+      <GridBackground />
+      <div className="container mx-auto relative z-10">
         <div className="text-center max-w-3xl mx-auto mb-16">
           <span className="text-jethro-blue font-medium tracking-wide">TESTIMONIALS</span>
-          <h2 className="text-3xl md:text-4xl font-playfair font-semibold mt-3 mb-6">
+          <h2 className="text-3xl md:text-4xl font-playfair font-semibold mt-3 mb-6 text-white">
             What Our Clients Say
           </h2>
-          <p className="text-jethro-black/70 leading-relaxed">
+          <p className="text-white/80 leading-relaxed">
             We measure our success through the improved outcomes and efficiency gains 
             experienced by the organizations we serve.
           </p>

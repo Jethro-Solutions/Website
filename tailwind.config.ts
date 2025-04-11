@@ -1,4 +1,3 @@
-
 import type { Config } from "tailwindcss";
 
 export default {
@@ -95,12 +94,46 @@ export default {
 						opacity: '1',
 						transform: 'translateY(0)'
 					}
+				},
+				'spotlight': {
+					'0%': {
+						opacity: '0',
+						transform: 'translate(-50%, -50%) scale(0.7)'
+					},
+					'50%': {
+						opacity: '0.8',
+						transform: 'translate(-50%, -50%) scale(1.1)'
+					},
+					'100%': {
+						opacity: '0.9',
+						transform: 'translate(-50%, -50%) scale(1)'
+					}
+				},
+				'spotlight-sweep': {
+					'0%': {
+						transform: 'translate(-60%, -50%) scale(1)'
+					},
+					'25%': {
+						transform: 'translate(-40%, -50%) scale(1)'
+					},
+					'50%': {
+						transform: 'translate(-20%, -50%) scale(1)'
+					},
+					'75%': {
+						transform: 'translate(-40%, -50%) scale(1)'
+					},
+					'100%': {
+						transform: 'translate(-60%, -50%) scale(1)'
+					}
 				}
 			},
 			animation: {
 				'accordion-down': 'accordion-down 0.2s ease-out',
 				'accordion-up': 'accordion-up 0.2s ease-out',
-				'fade-in': 'fade-in 0.4s ease-out'
+				'fade-in': 'fade-in 0.4s ease-out',
+				'spotlight': 'spotlight 2.5s cubic-bezier(0.25, 0.1, 0.25, 1) forwards',
+				'spotlight-sweep': 'spotlight 1.5s cubic-bezier(0.25, 0.1, 0.25, 1) forwards, spotlight-sweep 8s ease-in-out infinite',
+				'spotlight-sweep-delayed': 'spotlight 1.5s cubic-bezier(0.25, 0.1, 0.25, 1) forwards, spotlight-sweep 8s ease-in-out infinite 4s'
 			},
 			fontFamily: {
 				'playfair': ['Playfair Display', 'serif'],

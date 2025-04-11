@@ -1,6 +1,6 @@
-
 import React from 'react';
 import { CheckCircle } from 'lucide-react';
+import { Button } from './ui/button';
 
 const Approach: React.FC = () => {
   return (
@@ -32,9 +32,9 @@ const Approach: React.FC = () => {
             </div>
             
             <div className="mt-10">
-              <a href="#contact" className="btn-primary">
-                Discuss Your Project
-              </a>
+              <Button asChild variant="default" className="bg-[#28452c] hover:bg-[#28452c]/90 border border-[#4e8253] shadow-[0_0_15px_rgba(78,130,83,0.5)] transition-all duration-300">
+                <a href="#contact">Discuss Your Project</a>
+              </Button>
             </div>
           </div>
           
