@@ -1,4 +1,3 @@
-
 import type { Config } from "tailwindcss";
 
 export default {
@@ -61,6 +60,10 @@ export default {
 				md: 'calc(var(--radius) - 2px)',
 				sm: 'calc(var(--radius) - 4px)'
 			},
+			fontFamily: {
+				playfair: ["\"Playfair Display\"", "serif"],
+				"ibm-plex-mono": ["\"IBM Plex Mono\"", "monospace"],
+			},
 			maxWidth: {
 				'container': '1200px',
 			},
@@ -80,6 +83,9 @@ export default {
 			},
 			transitionTimingFunction: {
 				'default': 'ease-in-out',
+			},
+			backgroundImage: {
+				'gradient-conic': 'conic-gradient(var(--tw-gradient-stops))',
 			},
 			keyframes: {
 				'accordion-down': {

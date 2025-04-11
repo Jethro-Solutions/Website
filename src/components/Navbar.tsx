@@ -1,105 +1,87 @@
+"use client";
+import React, { useState } from "react";
+import {
+  motion,
+  AnimatePresence,
+  useScroll,
+  useMotionValueEvent,
+} from "framer-motion";
+import { cn } from "@/lib/utils";
+import { Link } from "react-router-dom";
 
-import React, { useState, useEffect } from 'react';
-import { Button } from "@/components/ui/button";
-import { Menu, X } from "lucide-react";
+const navItems = [
+  {
+    name: "Services",
+    link: "#services",
+  },
+  {
+    name: "About Us",
+    link: "#about",
+  },
+  {
+    name: "Projects",
+    link: "#projects",
+  },
+];
 
-const Navbar = () => {
-  const [isScrolled, setIsScrolled] = useState(false);
-  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+export const Navbar = () => {
+  const { scrollYProgress } = useScroll();
+  const [visible, setVisible] = useState(true);
 
-  // Handle scroll event for navbar appearance
-  useEffect(() => {
-    const handleScroll = () => {
-      if (window.scrollY > 10) {
-        setIsScrolled(true);
+  useMotionValueEvent(scrollYProgress, "change", (current) => {
+    if (typeof current === "number") {
+      let direction = current! - scrollYProgress.getPrevious()!;
+
+      if (scrollYProgress.get() < 0.05) {
+        // Show when at the top of the page
+        setVisible(true);
       } else {
-        setIsScrolled(false);
+        if (direction < 0) {
+          // Show when scrolling up
+          setVisible(true);
+        } else {
+          // Hide when scrolling down
+          setVisible(false);
+        }
       }
-    };
-
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
+    }
+  });
 
   return (
-    <header
-      className={`fixed w-full z-50 transition-all duration-default ${
-        isScrolled
-          ? 'bg-background/80 backdrop-blur-md py-4 shadow-md'
-          : 'bg-transparent py-6'
-      }`}
-    >
-      <div className="container-custom flex items-center justify-between">
-        <a href="/" className="flex items-center gap-2">
-          <span className="font-bold text-xl text-gradient">JETHRO</span>
-          <span className="font-medium text-muted-foreground">Solutions</span>
-        </a>
-
-        {/* Desktop Navigation */}
-        <nav className="hidden md:flex items-center space-x-8">
-          <a href="#services" className="text-sm font-medium hover:text-primary transition-colors duration-default">
-            Services
-          </a>
-          <a href="#about" className="text-sm font-medium hover:text-primary transition-colors duration-default">
-            About Us
-          </a>
-          <a href="#projects" className="text-sm font-medium hover:text-primary transition-colors duration-default">
-            Projects
-          </a>
-          <Button variant="ghost" size="sm" className="hover:text-primary">
-            Login
-          </Button>
-          <Button size="sm">
-            Contact Sales
-          </Button>
-        </nav>
-
-        {/* Mobile menu button */}
-        <Button 
-          variant="ghost" 
-          size="icon" 
-          className="md:hidden"
-          onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-        >
-          {isMobileMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
-        </Button>
-      </div>
-
-      {/* Mobile Navigation */}
-      {isMobileMenuOpen && (
-        <div className="md:hidden absolute top-full left-0 w-full bg-background/95 backdrop-blur-md border-t border-border animate-fade-in">
-          <div className="container-custom py-6 flex flex-col space-y-4">
-            <a 
-              href="#services" 
-              className="text-sm font-medium py-2 hover:text-primary transition-colors duration-default"
-              onClick={() => setIsMobileMenuOpen(false)}
-            >
-              Services
-            </a>
-            <a 
-              href="#about" 
-              className="text-sm font-medium py-2 hover:text-primary transition-colors duration-default"
-              onClick={() => setIsMobileMenuOpen(false)}
-            >
-              About Us
-            </a>
-            <a 
-              href="#projects" 
-              className="text-sm font-medium py-2 hover:text-primary transition-colors duration-default"
-              onClick={() => setIsMobileMenuOpen(false)}
-            >
-              Projects
-            </a>
-            <Button variant="ghost" size="sm" className="justify-start hover:text-primary">
-              Login
-            </Button>
-            <Button size="sm" className="w-full sm:w-auto">
-              Contact Sales
-            </Button>
-          </div>
-        </div>
-      )}
-    </header>
+    <AnimatePresence mode="wait">
+      <motion.div
+        initial={{
+          opacity: 1,
+          y: -100,
+        }}
+        animate={{
+          y: visible ? 0 : -100,
+          opacity: visible ? 1 : 0,
+        }}
+        transition={{
+          duration: 0.2,
+        }}
+        className={cn(
+          "flex max-w-fit fixed top-10 inset-x-0 mx-auto border border-transparent dark:border-white/[0.2] rounded-full dark:bg-black bg-white shadow-[0px_2px_3px_-1px_rgba(0,0,0,0.1),0px_1px_0px_0px_rgba(25,28,33,0.02),0px_0px_0px_1px_rgba(25,28,33,0.08)] z-[5000] pr-2 pl-8 py-2 items-center justify-center space-x-4 transition-all duration-300 hover:shadow-[0_0_15px_rgba(0,0,0,0.1)] dark:hover:shadow-[0_0_15px_rgba(255,255,255,0.1)]"
+        )}
+      >
+        {navItems.map((navItem, idx) => (
+          <Link
+            key={`link=${idx}`}
+            to={navItem.link}
+            className={cn(
+              "relative dark:text-neutral-50 items-center flex space-x-1 text-neutral-600 dark:hover:text-neutral-300 hover:text-neutral-500"
+            )}
+          >
+            <span className="hidden sm:block text-sm">{navItem.name}</span>
+          </Link>
+        ))}
+        <button className="border text-sm font-medium relative border-neutral-200 dark:border-white/[0.2] text-black dark:text-white px-4 py-2 rounded-full">
+          <span>Login</span>
+          <span className="absolute inset-x-0 w-1/2 mx-auto -bottom-px bg-gradient-to-r from-transparent via-blue-500 to-transparent h-px" />
+        </button>
+      </motion.div>
+    </AnimatePresence>
   );
 };
 
