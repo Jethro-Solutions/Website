@@ -1,11 +1,11 @@
-const Contact = require('../models/Contact');
+const contactService = require('../services/contactService');
 
 // @desc    Create new contact submission
 // @route   POST /api/contacts
 // @access  Public
 exports.createContact = async (req, res, next) => {
   try {
-    const contact = await Contact.create(req.body);
+    const contact = await contactService.createContact(req.body);
 
     res.status(201).json({
       success: true,
@@ -21,7 +21,7 @@ exports.createContact = async (req, res, next) => {
 // @access  Private
 exports.getContacts = async (req, res, next) => {
   try {
-    const contacts = await Contact.find().sort('-createdAt');
+    const contacts = await contactService.getAllContacts();
 
     res.status(200).json({
       success: true,
@@ -38,14 +38,7 @@ exports.getContacts = async (req, res, next) => {
 // @access  Private
 exports.getContact = async (req, res, next) => {
   try {
-    const contact = await Contact.findById(req.params.id);
-
-    if (!contact) {
-      return res.status(404).json({
-        success: false,
-        error: 'Contact not found'
-      });
-    }
+    const contact = await contactService.getContactById(req.params.id);
 
     res.status(200).json({
       success: true,
@@ -61,19 +54,7 @@ exports.getContact = async (req, res, next) => {
 // @access  Private
 exports.updateContact = async (req, res, next) => {
   try {
-    let contact = await Contact.findById(req.params.id);
-
-    if (!contact) {
-      return res.status(404).json({
-        success: false,
-        error: 'Contact not found'
-      });
-    }
-
-    contact = await Contact.findByIdAndUpdate(req.params.id, req.body, {
-      new: true,
-      runValidators: true
-    });
+    const contact = await contactService.updateContact(req.params.id, req.body);
 
     res.status(200).json({
       success: true,

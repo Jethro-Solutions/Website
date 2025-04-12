@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const EncryptionService = require('../utils/encryption');
 
 const ContactSchema = new mongoose.Schema({
   name: {
@@ -33,10 +34,40 @@ const ContactSchema = new mongoose.Schema({
     enum: ['new', 'read', 'contacted', 'closed'],
     default: 'new'
   },
+  encryptedData: {
+    type: Object,
+    select: false // This field won't be returned by default
+  },
   createdAt: {
     type: Date,
     default: Date.now
   }
 });
+
+// Encrypt sensitive data before saving
+ContactSchema.pre('save', function(next) {
+  if (this.isModified('phone') || this.isModified('email') || this.isModified('message')) {
+    const sensitiveData = {
+      phone: this.phone,
+      email: this.email,
+      message: this.message
+    };
+    this.encryptedData = EncryptionService.encrypt(JSON.stringify(sensitiveData));
+    // Clear the original fields
+    this.phone = undefined;
+    this.email = undefined;
+    this.message = undefined;
+  }
+  next();
+});
+
+// Decrypt data when retrieving
+ContactSchema.methods.getDecryptedData = function() {
+  if (this.encryptedData) {
+    const decrypted = EncryptionService.decrypt(this.encryptedData);
+    return JSON.parse(decrypted);
+  }
+  return null;
+};
 
 module.exports = mongoose.model('Contact', ContactSchema); 
