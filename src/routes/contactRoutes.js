@@ -1,15 +1,15 @@
-const express = require('express');
-const {
+import express from 'express';
+import {
   createContact,
   getContacts,
   getContact,
   updateContact,
   deleteContact
-} = require('../controllers/contactController');
+} from '../controllers/contactController.js';
+
+import { protect, authorize } from '../middleware/auth.js';
 
 const router = express.Router();
-
-const { protect, authorize } = require('../middleware/auth');
 
 router
   .route('/')
@@ -22,4 +22,4 @@ router
   .put(protect, authorize('admin'), updateContact)
   .delete(protect, authorize('admin'), deleteContact);
 
-module.exports = router; 
+export { router }; 

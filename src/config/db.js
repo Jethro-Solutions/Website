@@ -1,7 +1,7 @@
-const mongoose = require('mongoose');
-const config = require('./config');
+import mongoose from 'mongoose';
+import { config } from './config.js';
 
-const connectDB = async () => {
+export const connectDB = async () => {
   try {
     const conn = await mongoose.connect(config.mongoUri, {
       useNewUrlParser: true,
@@ -27,6 +27,4 @@ const connectDB = async () => {
     console.error(`Error connecting to MongoDB: ${error.message}`);
     process.exit(1);
   }
-};
-
-module.exports = connectDB; 
+}; 

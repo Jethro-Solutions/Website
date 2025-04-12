@@ -1,5 +1,5 @@
-const mongoose = require('mongoose');
-const EncryptionService = require('../utils/encryption');
+import mongoose from 'mongoose';
+import EncryptionService from '../utils/encryption.js';
 
 const ContactSchema = new mongoose.Schema({
   name: {
@@ -70,4 +70,4 @@ ContactSchema.methods.getDecryptedData = function() {
   return null;
 };
 
-module.exports = mongoose.model('Contact', ContactSchema); 
+export default mongoose.model('Contact', ContactSchema); 

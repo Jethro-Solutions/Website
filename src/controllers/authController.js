@@ -1,9 +1,9 @@
-const userService = require('../services/userService');
+import * as userService from '../services/userService.js';
 
 // @desc    Register user
 // @route   POST /api/auth/register
 // @access  Public
-exports.register = async (req, res, next) => {
+export const register = async (req, res, next) => {
   try {
     const { user, token } = await userService.registerUser(req.body);
 
@@ -20,7 +20,7 @@ exports.register = async (req, res, next) => {
 // @desc    Login user
 // @route   POST /api/auth/login
 // @access  Public
-exports.login = async (req, res, next) => {
+export const login = async (req, res, next) => {
   try {
     const { email, password } = req.body;
 
@@ -39,7 +39,7 @@ exports.login = async (req, res, next) => {
 // @desc    Get current logged in user
 // @route   GET /api/auth/me
 // @access  Private
-exports.getMe = async (req, res, next) => {
+export const getMe = async (req, res, next) => {
   try {
     const user = await userService.getUserById(req.user.id);
 
@@ -55,7 +55,7 @@ exports.getMe = async (req, res, next) => {
 // @desc    Log user out / clear cookie
 // @route   GET /api/auth/logout
 // @access  Private
-exports.logout = async (req, res, next) => {
+export const logout = async (req, res, next) => {
   res.status(200).json({
     success: true,
     data: {}

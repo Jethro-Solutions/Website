@@ -1,9 +1,10 @@
-const contactService = require('../services/contactService');
+import * as contactService from '../services/contactService.js';
+import Contact from '../models/Contact.js';
 
 // @desc    Create new contact submission
 // @route   POST /api/contacts
 // @access  Public
-exports.createContact = async (req, res, next) => {
+export const createContact = async (req, res, next) => {
   try {
     const contact = await contactService.createContact(req.body);
 
@@ -19,7 +20,7 @@ exports.createContact = async (req, res, next) => {
 // @desc    Get all contacts
 // @route   GET /api/contacts
 // @access  Private
-exports.getContacts = async (req, res, next) => {
+export const getContacts = async (req, res, next) => {
   try {
     const contacts = await contactService.getAllContacts();
 
@@ -36,7 +37,7 @@ exports.getContacts = async (req, res, next) => {
 // @desc    Get single contact
 // @route   GET /api/contacts/:id
 // @access  Private
-exports.getContact = async (req, res, next) => {
+export const getContact = async (req, res, next) => {
   try {
     const contact = await contactService.getContactById(req.params.id);
 
@@ -52,7 +53,7 @@ exports.getContact = async (req, res, next) => {
 // @desc    Update contact
 // @route   PUT /api/contacts/:id
 // @access  Private
-exports.updateContact = async (req, res, next) => {
+export const updateContact = async (req, res, next) => {
   try {
     const contact = await contactService.updateContact(req.params.id, req.body);
 
@@ -68,7 +69,7 @@ exports.updateContact = async (req, res, next) => {
 // @desc    Delete contact
 // @route   DELETE /api/contacts/:id
 // @access  Private
-exports.deleteContact = async (req, res, next) => {
+export const deleteContact = async (req, res, next) => {
   try {
     const contact = await Contact.findById(req.params.id);
 

@@ -1,18 +1,18 @@
-const express = require('express');
-const morgan = require('morgan');
-const cors = require('cors');
-const { setupSecurity } = require('./middleware/security');
-const connectDB = require('./config/db');
-const errorHandler = require('./middleware/error');
-const config = require('./config/config');
-const swaggerSetup = require('./utils/swagger');
+import express from 'express';
+import morgan from 'morgan';
+import cors from 'cors';
+import { setupSecurity } from './middleware/security.js';
+import { connectDB } from './config/db.js';
+import { errorHandler } from './middleware/error.js';
+import { config } from './config/config.js';
+import { swaggerSetup } from './utils/swagger.js';
 
 // Connect to database
 connectDB();
 
 // Route files
-const contactRoutes = require('./routes/contactRoutes');
-const authRoutes = require('./routes/authRoutes');
+import { router as contactRoutes } from './routes/contactRoutes.js';
+import { router as authRoutes } from './routes/authRoutes.js';
 
 const app = express();
 
@@ -65,4 +65,4 @@ process.on('unhandledRejection', (err, promise) => {
   server.close(() => process.exit(1));
 });
 
-module.exports = server; // For testing 
+export default server; // For testing 
