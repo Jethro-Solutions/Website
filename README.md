@@ -1,9 +1,10 @@
-# Jethro Solutions Website Backend
+# Jethro Solutions Website
 
-This repository contains the backend API for the Jethro Solutions website.
+This repository contains both the frontend and backend for the Jethro Solutions website.
 
 ## Technology Stack
 
+### Backend
 - **Runtime**: Node.js
 - **Framework**: Express.js
 - **Database**: MongoDB
@@ -11,6 +12,15 @@ This repository contains the backend API for the Jethro Solutions website.
 - **Documentation**: Swagger
 - **Testing**: Jest
 - **Containerization**: Docker
+
+### Frontend
+- **Framework**: React with TypeScript
+- **Styling**: Tailwind CSS
+- **UI Components**: Shadcn UI
+- **State Management**: React Query
+- **Form Handling**: React Hook Form
+- **Routing**: React Router
+- **Build Tool**: Vite
 
 ## Prerequisites
 
@@ -43,9 +53,13 @@ This repository contains the backend API for the Jethro Solutions website.
    JWT_EXPIRE=30d
    ```
 
-4. Start the development server:
+4. Start the development servers:
    ```
-   npm run dev
+   # Terminal 1 - Backend
+   npm run dev:backend
+
+   # Terminal 2 - Frontend
+   npm run dev:frontend
    ```
 
 ### Method 2: Docker Development
@@ -78,14 +92,18 @@ npm test
 ```
 jethro-website/
 ├── src/
-│   ├── config/        # Configuration files
-│   ├── controllers/   # Route controllers
-│   ├── middleware/    # Custom middleware
-│   ├── models/        # Mongoose models
-│   ├── routes/        # Express routes
-│   ├── tests/         # Tests
-│   ├── utils/         # Utility functions
-│   └── server.js      # Entry point
+│   ├── config/        # Backend configuration files
+│   ├── controllers/   # Backend route controllers
+│   ├── middleware/    # Backend custom middleware
+│   ├── models/        # Backend Mongoose models
+│   ├── routes/        # Backend Express routes
+│   ├── tests/         # Backend tests
+│   ├── utils/         # Backend utility functions
+│   ├── server.js      # Backend entry point
+│   ├── App.tsx        # Frontend entry point
+│   ├── components/    # Frontend React components
+│   ├── pages/         # Frontend page components
+│   └── styles/        # Frontend styles
 ├── .env               # Environment variables
 ├── Dockerfile         # Docker configuration
 ├── docker-compose.yml # Docker Compose configuration
@@ -98,17 +116,21 @@ jethro-website/
 
 - **Authentication**
   - POST /api/auth/register - Register a new user
-  - POST /api/auth/login - Login a user
+  - POST /api/auth/login - Login user
   - GET /api/auth/me - Get current user
-  - GET /api/auth/logout - Logout user
+  - POST /api/auth/logout - Logout user
 
-- **Contacts**
-  - POST /api/contacts - Submit a contact form
-  - GET /api/contacts - Get all contacts (admin only)
-  - GET /api/contacts/:id - Get a specific contact (admin only)
-  - PUT /api/contacts/:id - Update a contact (admin only)
-  - DELETE /api/contacts/:id - Delete a contact (admin only)
+- **Contact**
+  - POST /api/contact - Submit contact form
+  - GET /api/contact - Get all contact submissions (admin only)
+  - GET /api/contact/:id - Get specific contact submission (admin only)
+  - DELETE /api/contact/:id - Delete contact submission (admin only)
 
-## License
+## Frontend Features
 
-[ISC](LICENSE) 
+- Modern, responsive design
+- Dark mode support
+- Form validation
+- Real-time updates
+- Interactive UI components
+- SEO optimization

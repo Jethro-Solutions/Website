@@ -1,0 +1,76 @@
+
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Inter:wght@300;400;500;600&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 37 38% 95%;
+    --foreground: 220 13% 16%;
+
+    --card: 37 38% 95%;
+    --card-foreground: 220 13% 16%;
+
+    --popover: 37 38% 95%;
+    --popover-foreground: 220 13% 16%;
+
+    --primary: 216 67% 31%;
+    --primary-foreground: 37 38% 95%;
+
+    --secondary: 0 0% 82%;
+    --secondary-foreground: 220 13% 16%;
+
+    --muted: 120 7% 75%;
+    --muted-foreground: 220 13% 46%;
+
+    --accent: 39 49% 67%;
+    --accent-foreground: 220 13% 16%;
+
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 210 40% 98%;
+
+    --border: 214.3 31.8% 91.4%;
+    --input: 214.3 31.8% 91.4%;
+    --ring: 216 67% 31%;
+
+    --radius: 0.5rem;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-jethro-cream text-jethro-black font-sans;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-playfair tracking-wide;
+  }
+}
+
+@layer components {
+  .btn-primary {
+    @apply bg-jethro-blue text-jethro-cream px-6 py-3 rounded hover:bg-opacity-90 transition-all font-medium;
+  }
+  
+  .btn-secondary {
+    @apply bg-jethro-cream border border-jethro-black text-jethro-black px-6 py-3 rounded hover:bg-jethro-gray/10 transition-all font-medium;
+  }
+
+  .section-divider {
+    @apply w-24 h-0.5 bg-jethro-black mx-auto my-12 opacity-20;
+  }
+  
+  .section-padding {
+    @apply py-20 px-6 md:px-12 lg:px-24;
+  }
+  
+  .card {
+    @apply bg-white bg-opacity-70 rounded-lg shadow-sm border border-jethro-gray/20 p-8 transition-all hover:shadow-md;
+  }
+}
