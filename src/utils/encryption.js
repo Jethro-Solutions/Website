@@ -1,8 +1,8 @@
 import crypto from 'crypto';
-import { jwtSecret } from '../config/config.js';
+import { config } from '../config/config.js';
 
 // Generate a secure encryption key from the JWT secret
-const encryptionKey = crypto.scryptSync(jwtSecret, 'salt', 32);
+const encryptionKey = crypto.scryptSync(config.jwtSecret, 'salt', 32);
 
 class EncryptionService {
   static encrypt(text) {

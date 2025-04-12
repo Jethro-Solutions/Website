@@ -1,4 +1,5 @@
-const Contact = require('../models/Contact');
+import Contact from '../models/Contact.js';
+import EncryptionService from '../utils/encryption.js';
 
 class ContactService {
   async createContact(contactData) {
@@ -49,6 +50,10 @@ class ContactService {
     }
   }
 
+  async deleteContact(id) {
+    return await Contact.findByIdAndDelete(id);
+  }
+
   // Helper method to decrypt contact data
   decryptContactData(contact) {
     const decryptedData = contact.getDecryptedData();
@@ -62,4 +67,4 @@ class ContactService {
   }
 }
 
-module.exports = new ContactService(); 
+export default new ContactService(); 

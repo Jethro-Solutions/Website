@@ -1,7 +1,7 @@
-const User = require('../models/User');
-const bcrypt = require('bcrypt');
-const jwt = require('jsonwebtoken');
-const config = require('../config/config');
+import User from '../models/User.js';
+import bcrypt from 'bcrypt';
+import jwt from 'jsonwebtoken';
+import { config } from '../config/config.js';
 
 class UserService {
   async registerUser(userData) {
@@ -70,6 +70,14 @@ class UserService {
       throw error;
     }
   }
+
+  async getUserByEmail(email) {
+    return await User.findOne({ email });
+  }
+
+  async deleteUser(id) {
+    return await User.findByIdAndDelete(id);
+  }
 }
 
-module.exports = new UserService(); 
+export default new UserService(); 

@@ -1,12 +1,10 @@
-const xss = require('xss-clean');
-const mongoSanitize = require('express-mongo-sanitize');
-const hpp = require('hpp');
-const rateLimit = require('express-rate-limit');
-const helmet = require('helmet');
-const slowDown = require('express-slow-down');
+import hpp from 'hpp';
+import rateLimit from 'express-rate-limit';
+import helmet from 'helmet';
+import slowDown from 'express-slow-down';
 
 // Security middleware setup
-exports.setupSecurity = (app) => {
+export const setupSecurity = (app) => {
   // Basic security headers
   app.use(helmet());
 
@@ -33,14 +31,8 @@ exports.setupSecurity = (app) => {
     }
   }));
 
-  // Prevent XSS attacks
-  app.use(xss());
-
   // Prevent parameter pollution
   app.use(hpp());
-
-  // Sanitize data
-  app.use(mongoSanitize());
 
   // Rate limiting
   const limiter = rateLimit({
@@ -70,7 +62,8 @@ exports.setupSecurity = (app) => {
   const speedLimiter = slowDown({
     windowMs: 15 * 60 * 1000, // 15 minutes
     delayAfter: 50, // allow 50 requests per 15 minutes, then...
-    delayMs: 500 // begin adding 500ms of delay per request
+    delayMs: () => 500, // add 500ms of delay per request above limit
+    validate: { delayMs: false } // disable the warning about delayMs
   });
 
   app.use(speedLimiter);
@@ -87,4 +80,4 @@ exports.setupSecurity = (app) => {
     res.setHeader('Permissions-Policy', 'geolocation=(), microphone=(), camera=()');
     next();
   });
-}; 
+};
