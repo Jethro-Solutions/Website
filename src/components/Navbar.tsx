@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Menu, X } from 'lucide-react';
+import { Logo } from './ui/Logo';
 
 const Navbar: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -26,10 +27,13 @@ const Navbar: React.FC = () => {
       }`}
     >
       <div className="container mx-auto px-6 flex items-center justify-between">
-        <a href="/" className="group flex items-center">
-          <h1 className="text-2xl font-playfair font-semibold text-jethro-black group-hover:text-jethro-blue transition-colors duration-300">
-            Jethro<span className="text-jethro-blue">.</span>
-          </h1>
+        <a href="/" className="group flex items-center gap-2">
+          <img 
+            src="/logos/icon black.svg" 
+            alt="Jethro Solutions Icon" 
+            className="h-8 w-8 transition-opacity duration-300 group-hover:opacity-80" 
+          />
+          <Logo variant="full" className="transition-opacity duration-300 group-hover:opacity-80" />
         </a>
         
         <nav className="hidden md:flex items-center space-x-8">
