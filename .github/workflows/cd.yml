@@ -1,0 +1,217 @@
+name: CD Pipeline
+
+on:
+  push:
+    branches: [ main ]
+    
+  # Allow manual trigger
+  workflow_dispatch:
+
+jobs:
+  deploy-production:
+    name: Deploy to Production
+    runs-on: ubuntu-latest
+    environment: production
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+      
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v2
+      
+      - name: Login to DockerHub
+        uses: docker/login-action@v2
+        with:
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
+      
+      - name: Build and push Docker image
+        uses: docker/build-push-action@v4
+        with:
+          context: .
+          push: true
+          tags: |
+            jethrosolutions/web:latest
+            jethrosolutions/web:${{ github.sha }}
+          cache-from: type=registry,ref=jethrosolutions/web:latest
+          cache-to: type=inline
+          target: production
+      
+      - name: Set up SSH
+        uses: webfactory/ssh-agent@v0.7.0
+        with:
+          ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
+      
+      - name: Add SSH known hosts
+        run: |
+          mkdir -p ~/.ssh
+          ssh-keyscan -H ${{ secrets.PRODUCTION_HOST }} >> ~/.ssh/known_hosts
+      
+      - name: Deploy to production server
+        env:
+          DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
+          DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
+          MONGO_USERNAME: ${{ secrets.MONGO_USERNAME }}
+          MONGO_PASSWORD: ${{ secrets.MONGO_PASSWORD }}
+          JWT_SECRET: ${{ secrets.JWT_SECRET }}
+          PRODUCTION_HOST: ${{ secrets.PRODUCTION_HOST }}
+          SSH_USER: ${{ secrets.SSH_USER }}
+        run: |
+          # Create deployment script
+          cat > deploy.sh << 'EOF'
+          #!/bin/bash
+          set -e
+          
+          # Create directory structure if it doesn't exist
+          mkdir -p ~/jethro-website/nginx/conf
+          mkdir -p ~/jethro-website/nginx/certs
+          
+          # Login to Docker Hub
+          echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
+          
+          # Pull latest images
+          docker pull jethrosolutions/web:latest
+          
+          # Create .env file for docker-compose
+          cat > ~/jethro-website/.env << EOL
+          MONGO_USERNAME=$MONGO_USERNAME
+          MONGO_PASSWORD=$MONGO_PASSWORD
+          EOL
+          
+          # Create docker-compose.yml file
+          cat > ~/jethro-website/docker-compose.yml << EOL
+          version: '3.8'
+          
+          services:
+            app:
+              image: jethrosolutions/web:latest
+              container_name: jethro-app
+              restart: always
+              ports:
+                - "8080:8080"
+              env_file:
+                - .env.production
+              depends_on:
+                - mongo
+              networks:
+                - jethro-network
+              volumes:
+                - app-logs:/app/logs
+              healthcheck:
+                test: ["CMD", "curl", "-f", "http://localhost:8080/health"]
+                interval: 30s
+                timeout: 10s
+                retries: 3
+                start_period: 30s
+          
+            mongo:
+              image: mongo:6
+              container_name: jethro-mongo
+              restart: always
+              environment:
+                - MONGO_INITDB_ROOT_USERNAME=${MONGO_USERNAME}
+                - MONGO_INITDB_ROOT_PASSWORD=${MONGO_PASSWORD}
+              volumes:
+                - mongo-data:/data/db
+              networks:
+                - jethro-network
+              healthcheck:
+                test: echo 'db.runCommand("ping").ok' | mongosh localhost:27017/test --quiet
+                interval: 30s
+                timeout: 10s
+                retries: 3
+                start_period: 30s
+          
+            nginx:
+              image: nginx:alpine
+              container_name: jethro-nginx
+              restart: always
+              ports:
+                - "80:80"
+                - "443:443"
+              volumes:
+                - ./nginx/conf:/etc/nginx/conf.d
+                - ./nginx/certs:/etc/nginx/certs
+              depends_on:
+                - app
+              networks:
+                - jethro-network
+              healthcheck:
+                test: ["CMD", "nginx", "-t"]
+                interval: 30s
+                timeout: 10s
+                retries: 3
+          
+          networks:
+            jethro-network:
+              driver: bridge
+          
+          volumes:
+            mongo-data:
+            app-logs:
+          EOL
+          
+          # Stop and remove existing containers
+          docker-compose -f ~/jethro-website/docker-compose.yml down || true
+          
+          # Start new containers
+          docker-compose -f ~/jethro-website/docker-compose.yml up -d
+          
+          # Clean up old images
+          docker image prune -af
+          EOF
+          
+          # Make script executable
+          chmod +x deploy.sh
+          
+          # Copy files to server
+          scp -r nginx/conf/* $SSH_USER@$PRODUCTION_HOST:~/jethro-website/nginx/conf/
+          scp .env.production $SSH_USER@$PRODUCTION_HOST:~/jethro-website/
+          scp deploy.sh $SSH_USER@$PRODUCTION_HOST:~/
+          
+          # Execute deployment script on server
+          ssh $SSH_USER@$PRODUCTION_HOST "export DOCKER_USERNAME='$DOCKER_USERNAME' DOCKER_PASSWORD='$DOCKER_PASSWORD' MONGO_USERNAME='$MONGO_USERNAME' MONGO_PASSWORD='$MONGO_PASSWORD' && ~/deploy.sh"
+      
+      - name: Verify deployment
+        env:
+          PRODUCTION_HOST: ${{ secrets.PRODUCTION_HOST }}
+          SSH_USER: ${{ secrets.SSH_USER }}
+        run: |
+          ssh $SSH_USER@$PRODUCTION_HOST "docker ps | grep jethro-app && echo 'App container is running' || exit 1"
+          ssh $SSH_USER@$PRODUCTION_HOST "docker ps | grep jethro-nginx && echo 'Nginx container is running' || exit 1"
+          ssh $SSH_USER@$PRODUCTION_HOST "docker ps | grep jethro-mongo && echo 'MongoDB container is running' || exit 1"
+  
+  notify:
+    name: Notify Deployment
+    needs: deploy-production
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Slack Notification
+        uses: rtCamp/action-slack-notify@v2
+        env:
+          SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
+          SLACK_CHANNEL: deployments
+          SLACK_TITLE: Production Deployment
+          SLACK_MESSAGE: 'Successfully deployed Jethro Solutions website to production :rocket:'
+          SLACK_COLOR: good
+          
+      - name: Send email notification
+        uses: dawidd6/action-send-mail@v3
+        with:
+          server_address: ${{ secrets.MAIL_SERVER }}
+          server_port: ${{ secrets.MAIL_PORT }}
+          username: ${{ secrets.MAIL_USERNAME }}
+          password: ${{ secrets.MAIL_PASSWORD }}
+          subject: Jethro Solutions Website Deployment
+          body: |
+            The Jethro Solutions website has been successfully deployed to production.
+            
+            Commit: ${{ github.sha }}
+            Ref: ${{ github.ref }}
+            Workflow: ${{ github.workflow }}
+            
+            View the deployment at: https://jethrosolutions.com
+          to: team@jethrosolutions.com
+          from: GitHub Actions <noreply@github.com> 

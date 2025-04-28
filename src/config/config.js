@@ -13,5 +13,9 @@ export const config = {
   siteName: 'Jethro Solutions',
   siteDescription: 'Modern Web Development Services',
   locale: 'en_US',
-  twitterHandle: '@jethrosolutions'
+  twitterHandle: '@jethrosolutions',
+  analytics: {
+    gaId: process.env.GA_MEASUREMENT_ID || '',
+    gtmId: process.env.GTM_CONTAINER_ID || ''
+  }
 }; 
