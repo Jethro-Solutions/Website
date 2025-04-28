@@ -1,68 +1,96 @@
 import express from 'express';
-import morgan from 'morgan';
-import cors from 'cors';
-import { setupSecurity } from './middleware/security.js';
-import { connectDB } from './config/db.js';
-import { errorHandler } from './middleware/error.js';
 import { config } from './config/config.js';
-import { swaggerSetup } from './utils/swagger.js';
+import { connectDB } from './config/db.js';
+import { setupSecurity } from './middleware/security.js';
+import { accessLogger, errorLogger, developmentLogger } from './middleware/logger.js';
+import { validateRegister, validateContact } from './middleware/validation.js';
+import { seoMiddleware } from './middleware/seo.js';
+import authRoutes from './routes/auth.js';
+import userRoutes from './routes/users.js';
+import contactRoutes from './routes/contact.js';
+import seoRoutes from './routes/seo.js';
+import pageRoutes from './routes/pages.js';
+import path from 'path';
+import { fileURLToPath } from 'url';
+import fs from 'fs';
 
-// Connect to database
-connectDB();
-
-// Route files
-import { router as contactRoutes } from './routes/contactRoutes.js';
-import { router as authRoutes } from './routes/authRoutes.js';
-
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const app = express();
 
-// Body parser
-app.use(express.json({ limit: '10kb' })); // Limit payload size
+// Connect to MongoDB
+connectDB();
 
 // Security middleware
 setupSecurity(app);
 
-// CORS configuration
-app.use(cors({
-  origin: process.env.NODE_ENV === 'production' 
-    ? ['https://yourdomain.com'] 
-    : ['http://localhost:3000'],
-  methods: ['GET', 'POST', 'PUT', 'DELETE'],
-  allowedHeaders: ['Content-Type', 'Authorization'],
-  credentials: true
-}));
-
-// Dev logging middleware
+// Logging middleware
 if (config.env === 'development') {
-  app.use(morgan('dev'));
+  app.use(developmentLogger);
+} else {
+  app.use(accessLogger);
+  app.use(errorLogger);
 }
 
-// Mount routers
-app.use('/api/contacts', contactRoutes);
+// Body parser
+app.use(express.json({ limit: '10kb' })); // Limit payload size
+app.use(express.urlencoded({ extended: true, limit: '10kb' }));
+
+// Set up SEO middleware
+app.use(seoMiddleware());
+
+// Create views directory if it doesn't exist
+const viewsDir = path.join(__dirname, 'views');
+if (!fs.existsSync(viewsDir)) {
+  fs.mkdirSync(viewsDir, { recursive: true });
+}
+
+// Create public directory if it doesn't exist
+const publicDir = path.join(__dirname, '../public');
+if (!fs.existsSync(publicDir)) {
+  fs.mkdirSync(publicDir, { recursive: true });
+}
+
+// Create public/images directory if it doesn't exist
+const imagesDir = path.join(publicDir, 'images');
+if (!fs.existsSync(imagesDir)) {
+  fs.mkdirSync(imagesDir, { recursive: true });
+}
+
+// Static files
+app.use(express.static(publicDir));
+
+// API Routes
 app.use('/api/auth', authRoutes);
+app.use('/api/users', userRoutes);
+app.use('/api/contact', contactRoutes);
 
-// Set up Swagger documentation
-swaggerSetup(app);
+// SEO routes (sitemap, robots.txt)
+app.use('/', seoRoutes);
 
-// Base route
-app.get('/', (req, res) => {
-  res.json({ message: 'Welcome to Jethro Solutions API' });
+// Page routes (server-rendered pages with SEO)
+app.use('/', pageRoutes);
+
+// Health check endpoint
+app.get('/health', (req, res) => {
+  res.status(200).json({ status: 'ok' });
+});
+
+// API documentation route
+app.get('/api/docs', (req, res) => {
+  res.redirect('/api-docs');
 });
 
 // Error handling middleware
-app.use(errorHandler);
+app.use((err, req, res, next) => {
+  console.error(err.stack);
+  res.status(500).json({
+    success: false,
+    error: 'Server Error'
+  });
+});
 
-const PORT = config.port;
+const PORT = config.port || 5000;
 
-const server = app.listen(PORT, () => {
+app.listen(PORT, () => {
   console.log(`Server running in ${config.env} mode on port ${PORT}`);
-});
-
-// Handle unhandled promise rejections
-process.on('unhandledRejection', (err, promise) => {
-  console.log(`Error: ${err.message}`);
-  // Close server & exit process
-  server.close(() => process.exit(1));
-});
-
-export default server; // For testing 
+}); 

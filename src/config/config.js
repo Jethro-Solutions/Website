@@ -9,4 +9,9 @@ export const config = {
   mongoUri: process.env.MONGO_URI,
   jwtSecret: process.env.JWT_SECRET,
   jwtExpire: process.env.JWT_EXPIRE || '30d',
+  productionUrl: process.env.PRODUCTION_URL || 'https://jethrosolutions.com',
+  siteName: 'Jethro Solutions',
+  siteDescription: 'Modern Web Development Services',
+  locale: 'en_US',
+  twitterHandle: '@jethrosolutions'
 }; 
