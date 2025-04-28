@@ -20,9 +20,8 @@ const Contact: React.FC = () => {
     setStatus('submitting');
 
     try {
-      // TODO: Replace 'YOUR_FORMSPREE_ID' with your actual Formspree form ID
-      // You can get this by creating a form at https://formspree.io
-      const response = await fetch('https://formspree.io/f/YOUR_FORMSPREE_ID', {
+      // Using the provided Formspree ID
+      const response = await fetch('https://formspree.io/f/xjkwgbda', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
