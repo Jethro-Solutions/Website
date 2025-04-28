@@ -54,12 +54,6 @@ const Navbar: React.FC = () => {
           >
             Get in Touch
           </a>
-          <a 
-            href="/icons-demo" 
-            className="font-medium text-jethro-black hover:text-jethro-blue transition-colors duration-200"
-          >
-            UI Demo
-          </a>
         </nav>
         
         <button 
@@ -94,13 +88,6 @@ const Navbar: React.FC = () => {
             onClick={toggleMenu}
           >
             Get in Touch
-          </a>
-          <a 
-            href="/icons-demo" 
-            className="font-medium text-jethro-black hover:text-jethro-blue transition-colors duration-200 py-2"
-            onClick={toggleMenu}
-          >
-            UI Demo
           </a>
         </div>
       </div>
