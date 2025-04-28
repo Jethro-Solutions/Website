@@ -32,8 +32,7 @@ app.use(express.urlencoded({ extended: true, limit: '10kb' }));
 app.use(seoMiddleware());
 
 // Create directories if they don't exist
-// Note: In Vercel, this won't persist between requests, but it's
-// included for local development compatibility
+// Note: This is mainly for local development as Netlify has an ephemeral filesystem
 const ensureDirectoriesExist = () => {
   try {
     const viewsDir = path.join(__dirname, 'views');
@@ -66,7 +65,7 @@ app.use('/', seoRoutes);
 // Page routes (server-rendered pages with SEO)
 app.use('/', pageRoutes);
 
-// Health check endpoint
+// Health check endpoint - useful for Netlify health checks
 app.get('/health', (req, res) => {
   res.status(200).json({ status: 'ok' });
 });
@@ -81,7 +80,6 @@ app.use((err, req, res, next) => {
 });
 
 // Only listen directly when not being imported as a module
-// This is important for Vercel deployment where we export the app
 if (process.env.NODE_ENV !== 'production') {
   const PORT = config.port || 5000;
   app.listen(PORT, () => {
@@ -89,5 +87,5 @@ if (process.env.NODE_ENV !== 'production') {
   });
 }
 
-// Export the app for Vercel serverless functions
+// Export the app for Netlify functions
 export default app; 

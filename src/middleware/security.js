@@ -5,7 +5,7 @@ import slowDown from 'express-slow-down';
 import { corsMiddleware } from './cors.js';
 import { config } from '../config/config.js';
 
-// Security middleware setup for Vercel deployment
+// Security middleware setup for Netlify deployment
 export const setupSecurity = (app) => {
   // Enable CORS with specific configuration
   app.use(corsMiddleware);
@@ -15,10 +15,10 @@ export const setupSecurity = (app) => {
     contentSecurityPolicy: {
       directives: {
         defaultSrc: ["'self'"],
-        scriptSrc: ["'self'", "'unsafe-inline'", "*.vercel.app", "vercel.com"],
+        scriptSrc: ["'self'", "'unsafe-inline'", "*.netlify.app", "netlify.app", "*.jethrosolutions.com", "jethrosolutions.com"],
         styleSrc: ["'self'", "'unsafe-inline'"],
         imgSrc: ["'self'", "data:", "https:", "blob:"],
-        connectSrc: ["'self'", "*.vercel.app", "vercel.com"],
+        connectSrc: ["'self'", "*.netlify.app", "netlify.app", "*.jethrosolutions.com", "jethrosolutions.com"],
         fontSrc: ["'self'", "https:"],
         objectSrc: ["'none'"],
         mediaSrc: ["'self'"],
@@ -26,27 +26,27 @@ export const setupSecurity = (app) => {
         upgradeInsecureRequests: []
       }
     },
-    crossOriginEmbedderPolicy: false, // Disabled for Vercel compatibility
-    crossOriginOpenerPolicy: false // Disabled for Vercel compatibility
+    crossOriginEmbedderPolicy: false, // Needed for Netlify compatibility
+    crossOriginOpenerPolicy: false // Needed for Netlify compatibility
   }));
 
   // Prevent parameter pollution
   app.use(hpp());
 
-  // Rate limiting adjusted for serverless
+  // Rate limiting adjusted for Netlify functions
   const limiter = rateLimit({
     windowMs: 15 * 60 * 1000, // 15 minutes
     max: 100, // limit each IP to 100 requests per windowMs
     message: 'Too many requests from this IP, please try again later',
     standardHeaders: true,
     legacyHeaders: false,
-    // Optimized for serverless/Vercel
-    skipSuccessfulRequests: false, // Only count successful requests
-    skipFailedRequests: false, // Don't count failed requests
+    // Optimized for Netlify functions
+    skipSuccessfulRequests: false,
+    skipFailedRequests: false,
     keyGenerator: (req) => {
-      // Use Vercel-specific headers if available
-      return req.headers['x-forwarded-for'] || 
-             req.headers['x-real-ip'] || 
+      return req.headers['x-nf-client-connection-ip'] || 
+             req.headers['client-ip'] ||
+             req.headers['x-forwarded-for'] || 
              req.socket.remoteAddress || 
              req.ip;
     }
@@ -62,10 +62,11 @@ export const setupSecurity = (app) => {
     message: 'Too many login attempts, please try again later',
     standardHeaders: true,
     legacyHeaders: false,
-    // Optimized for serverless/Vercel
+    // Optimized for Netlify functions
     keyGenerator: (req) => {
-      return req.headers['x-forwarded-for'] || 
-             req.headers['x-real-ip'] || 
+      return req.headers['x-nf-client-connection-ip'] || 
+             req.headers['client-ip'] ||
+             req.headers['x-forwarded-for'] || 
              req.socket.remoteAddress || 
              req.ip;
     }
@@ -74,15 +75,16 @@ export const setupSecurity = (app) => {
   // Apply login rate limiting
   app.use('/api/auth/login', loginLimiter);
 
-  // Speed Limiter adjusted for serverless
+  // Speed Limiter adjusted for Netlify functions
   const speedLimiter = slowDown({
     windowMs: 15 * 60 * 1000, // 15 minutes
     delayAfter: 50, // allow 50 requests per 15 minutes, then...
     delayMs: () => 500, // add 500ms of delay per request above limit
-    // Optimized for serverless/Vercel
+    // Optimized for Netlify functions
     keyGenerator: (req) => {
-      return req.headers['x-forwarded-for'] || 
-             req.headers['x-real-ip'] || 
+      return req.headers['x-nf-client-connection-ip'] || 
+             req.headers['client-ip'] ||
+             req.headers['x-forwarded-for'] || 
              req.socket.remoteAddress || 
              req.ip;
     }
@@ -93,11 +95,12 @@ export const setupSecurity = (app) => {
   // Disable X-Powered-By header
   app.disable('x-powered-by');
 
-  // Simplified security headers for Vercel
+  // Security headers optimized for Netlify
   app.use((req, res, next) => {
-    // Only add headers that don't conflict with Vercel's defaults
     res.setHeader('X-Content-Type-Options', 'nosniff');
     res.setHeader('Referrer-Policy', 'strict-origin-when-cross-origin');
+    res.setHeader('X-Frame-Options', 'DENY');
+    res.setHeader('X-XSS-Protection', '1; mode=block');
     
     next();
   });

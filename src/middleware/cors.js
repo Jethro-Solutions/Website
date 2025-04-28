@@ -6,8 +6,12 @@ const allowedOrigins = [
   'http://localhost:8081',
   'http://localhost:8082',
   'http://localhost:8083',
-  // Add production domains when ready
-  // 'https://jethrosolutions.com'
+  // Production domains
+  'https://jethrosolutions.com',
+  'https://www.jethrosolutions.com',
+  // Netlify domains
+  'https://jethrosolutions.netlify.app',
+  'https://jethro-solutions.netlify.app'
 ];
 
 const corsOptions = {
@@ -28,9 +32,11 @@ const corsOptions = {
     'Authorization',
     'X-Requested-With',
     'Accept',
-    'Origin'
+    'Origin',
+    'X-Netlify-Cache',
+    'Netlify-CDN-Cache-Control'
   ],
-  exposedHeaders: ['Content-Range', 'X-Content-Range'],
+  exposedHeaders: ['Content-Range', 'X-Content-Range', 'X-Netlify-Cache'],
   credentials: true,
   maxAge: 86400, // 24 hours
   preflightContinue: false,
