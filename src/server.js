@@ -1,13 +1,9 @@
 import express from 'express';
 import { config } from './config/config.js';
-import { connectDB } from './config/db.js';
 import { setupSecurity } from './middleware/security.js';
 import { accessLogger, errorLogger, developmentLogger } from './middleware/logger.js';
 import { validateRegister, validateContact } from './middleware/validation.js';
 import { seoMiddleware } from './middleware/seo.js';
-import authRoutes from './routes/auth.js';
-import userRoutes from './routes/users.js';
-import contactRoutes from './routes/contact.js';
 import seoRoutes from './routes/seo.js';
 import pageRoutes from './routes/pages.js';
 import path from 'path';
@@ -16,17 +12,6 @@ import fs from 'fs';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const app = express();
-
-// Initialize MongoDB connection only if not already connected
-// This is important for serverless environments to avoid multiple connections
-let isConnected = false;
-const startDb = async () => {
-  if (!isConnected) {
-    await connectDB();
-    isConnected = true;
-  }
-};
-startDb();
 
 // Security middleware
 setupSecurity(app);
@@ -75,11 +60,6 @@ ensureDirectoriesExist();
 // Static files
 app.use(express.static(path.join(__dirname, '../public')));
 
-// API Routes
-app.use('/api/auth', authRoutes);
-app.use('/api/users', userRoutes);
-app.use('/api/contact', contactRoutes);
-
 // SEO routes (sitemap, robots.txt)
 app.use('/', seoRoutes);
 
@@ -89,11 +69,6 @@ app.use('/', pageRoutes);
 // Health check endpoint
 app.get('/health', (req, res) => {
   res.status(200).json({ status: 'ok' });
-});
-
-// API documentation route
-app.get('/api/docs', (req, res) => {
-  res.redirect('/api-docs');
 });
 
 // Error handling middleware

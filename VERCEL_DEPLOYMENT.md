@@ -6,16 +6,23 @@ This document provides instructions for deploying the Jethro Solutions website t
 
 - A [Vercel](https://vercel.com) account
 - Git repository with your code (GitHub, GitLab, or Bitbucket)
-- MongoDB Atlas account (or any other MongoDB provider)
+- A [Formspree](https://formspree.io) account for the contact form
 
 ## Setup Steps
 
-### 1. Prepare Your MongoDB Database
+### 1. Set Up Formspree
 
-1. Create a MongoDB Atlas cluster if you don't have one
-2. Set up a database user with appropriate permissions
-3. Get your MongoDB connection string from Atlas
-4. Add your IP address to the network access list (or use 0.0.0.0/0 to allow all)
+1. Create a Formspree account at [formspree.io](https://formspree.io)
+2. Create a new form and get your form ID
+3. Update the Contact component with your Formspree form ID:
+   ```jsx
+   // in src/components/Contact.tsx
+   const handleSubmit = async (e: React.FormEvent) => {
+     // ...
+     const response = await fetch('https://formspree.io/f/YOUR_FORMSPREE_ID', {
+     // ...
+   };
+   ```
 
 ### 2. Set Up Your Vercel Project
 
@@ -34,9 +41,6 @@ In your Vercel project settings, add the following environment variables:
 | Variable | Description | Example |
 |----------|-------------|---------|
 | `NODE_ENV` | Environment setting | `production` |
-| `MONGO_URI` | MongoDB connection string | `mongodb+srv://username:password@cluster.mongodb.net/jethro` |
-| `JWT_SECRET` | Secret key for JWT tokens | `your-secure-jwt-secret` |
-| `JWT_EXPIRE` | JWT token expiration | `30d` |
 | `PRODUCTION_URL` | Your production URL | `https://jethro-solutions.vercel.app` |
 
 ### 4. Deploy Your Project
@@ -48,8 +52,9 @@ In your Vercel project settings, add the following environment variables:
 ### 5. Verify Deployment
 
 1. Visit your deployed URL
-2. Check the `/health` endpoint to verify the API is functioning
-3. Test key features to ensure everything works correctly
+2. Check the `/health` endpoint to verify the server is functioning
+3. Test the contact form to ensure it's submitting to Formspree correctly
+4. Test all navigation and interactive elements
 
 ## Project Structure for Vercel
 
@@ -58,32 +63,34 @@ The project has been optimized for Vercel with the following files:
 - `vercel.json` - Configures build settings and routing
 - `src/server.js` - Modified to work well with serverless functions
 - `src/middleware/security.js` - Optimized security settings for Vercel
-- `src/config/db.js` - Enhanced MongoDB connection for serverless environments
+- `src/components/Contact.tsx` - React component with Formspree integration
 - `scripts/vercel-deploy.js` - Verify environment before deployment
 
 ## Troubleshooting
 
-### Connection Issues
+### Contact Form Issues
 
-If you experience connection issues to MongoDB:
+If the contact form isn't working:
 
-1. Verify your MongoDB connection string in the Vercel environment variables
-2. Ensure your IP is allowed in MongoDB Atlas Network Access
-3. Check the function logs in the Vercel dashboard
+1. Check that your Formspree ID is correct in the Contact component
+2. Verify that your Formspree form is active and properly configured
+3. Check browser console for any JavaScript errors
+4. Test the form directly through Formspree's test page
 
-### Rate Limiting Issues
+### Static Asset Issues
 
-The rate limiting middleware has been optimized for Vercel, but if you still face issues:
+If images or other static assets aren't loading:
 
-1. Check the Vercel function logs for specific error messages
-2. Consider adjusting the rate limiting configuration in `src/middleware/security.js`
+1. Verify that assets are properly placed in the `/public` directory
+2. Check the network tab in browser developer tools for 404 errors
+3. Ensure the paths to assets in your code are relative and correct
 
 ### Function Timeout
 
 If functions time out:
 
-1. Check if your MongoDB operations are taking too long
-2. Consider optimizing database queries
+1. Your site might be doing too much server-side processing
+2. Consider optimizing server-side rendering
 3. Check Vercel's function execution limits in your plan
 
 ## Continuous Deployment

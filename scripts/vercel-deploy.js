@@ -4,9 +4,7 @@
 // Check that required environment variables are present
 const requiredEnvVars = [
   'NODE_ENV',
-  'MONGO_URI',
-  'JWT_SECRET',
-  'JWT_EXPIRE'
+  'PRODUCTION_URL'
 ];
 
 const missing = requiredEnvVars.filter(varName => !process.env[varName]);
