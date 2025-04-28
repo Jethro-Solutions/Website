@@ -5,70 +5,87 @@ import slowDown from 'express-slow-down';
 import { corsMiddleware } from './cors.js';
 import { config } from '../config/config.js';
 
-// Security middleware setup
+// Security middleware setup for Vercel deployment
 export const setupSecurity = (app) => {
   // Enable CORS with specific configuration
   app.use(corsMiddleware);
 
-  // Basic security headers
-  app.use(helmet());
-
-  // Strict Transport Security
-  app.use(helmet.hsts({
-    maxAge: 31536000,
-    includeSubDomains: true,
-    preload: true
-  }));
-
-  // Content Security Policy
-  app.use(helmet.contentSecurityPolicy({
-    directives: {
-      defaultSrc: ["'self'"],
-      scriptSrc: ["'self'", "'unsafe-inline'"],
-      styleSrc: ["'self'", "'unsafe-inline'"],
-      imgSrc: ["'self'", "data:", "https:"],
-      connectSrc: ["'self'"],
-      fontSrc: ["'self'", "https:"],
-      objectSrc: ["'none'"],
-      mediaSrc: ["'self'"],
-      frameSrc: ["'none'"],
-      upgradeInsecureRequests: []
-    }
+  // Basic security with Helmet
+  app.use(helmet({
+    contentSecurityPolicy: {
+      directives: {
+        defaultSrc: ["'self'"],
+        scriptSrc: ["'self'", "'unsafe-inline'", "*.vercel.app", "vercel.com"],
+        styleSrc: ["'self'", "'unsafe-inline'"],
+        imgSrc: ["'self'", "data:", "https:", "blob:"],
+        connectSrc: ["'self'", "*.vercel.app", "vercel.com"],
+        fontSrc: ["'self'", "https:"],
+        objectSrc: ["'none'"],
+        mediaSrc: ["'self'"],
+        frameSrc: ["'none'"],
+        upgradeInsecureRequests: []
+      }
+    },
+    crossOriginEmbedderPolicy: false, // Disabled for Vercel compatibility
+    crossOriginOpenerPolicy: false // Disabled for Vercel compatibility
   }));
 
   // Prevent parameter pollution
   app.use(hpp());
 
-  // Global rate limiting
+  // Rate limiting adjusted for serverless
   const limiter = rateLimit({
     windowMs: 15 * 60 * 1000, // 15 minutes
     max: 100, // limit each IP to 100 requests per windowMs
     message: 'Too many requests from this IP, please try again later',
     standardHeaders: true,
-    legacyHeaders: false
+    legacyHeaders: false,
+    // Optimized for serverless/Vercel
+    skipSuccessfulRequests: false, // Only count successful requests
+    skipFailedRequests: false, // Don't count failed requests
+    keyGenerator: (req) => {
+      // Use Vercel-specific headers if available
+      return req.headers['x-forwarded-for'] || 
+             req.headers['x-real-ip'] || 
+             req.socket.remoteAddress || 
+             req.ip;
+    }
   });
 
   // Apply rate limiting to all routes
   app.use(limiter);
 
-  // Specific rate limit for login attempts
+  // Login rate limiting
   const loginLimiter = rateLimit({
     windowMs: 60 * 60 * 1000, // 1 hour
     max: 5, // limit each IP to 5 login requests per hour
     message: 'Too many login attempts, please try again later',
     standardHeaders: true,
-    legacyHeaders: false
+    legacyHeaders: false,
+    // Optimized for serverless/Vercel
+    keyGenerator: (req) => {
+      return req.headers['x-forwarded-for'] || 
+             req.headers['x-real-ip'] || 
+             req.socket.remoteAddress || 
+             req.ip;
+    }
   });
 
   // Apply login rate limiting
   app.use('/api/auth/login', loginLimiter);
 
-  // Speed Limiter
+  // Speed Limiter adjusted for serverless
   const speedLimiter = slowDown({
     windowMs: 15 * 60 * 1000, // 15 minutes
     delayAfter: 50, // allow 50 requests per 15 minutes, then...
     delayMs: () => 500, // add 500ms of delay per request above limit
-    validate: { delayMs: false } // disable the warning about delayMs
+    // Optimized for serverless/Vercel
+    keyGenerator: (req) => {
+      return req.headers['x-forwarded-for'] || 
+             req.headers['x-real-ip'] || 
+             req.socket.remoteAddress || 
+             req.ip;
+    }
   });
 
   app.use(speedLimiter);
@@ -76,28 +93,11 @@ export const setupSecurity = (app) => {
   // Disable X-Powered-By header
   app.disable('x-powered-by');
 
-  // Add security headers
+  // Simplified security headers for Vercel
   app.use((req, res, next) => {
-    // Basic security headers
+    // Only add headers that don't conflict with Vercel's defaults
     res.setHeader('X-Content-Type-Options', 'nosniff');
-    res.setHeader('X-Frame-Options', 'DENY');
-    res.setHeader('X-XSS-Protection', '1; mode=block');
     res.setHeader('Referrer-Policy', 'strict-origin-when-cross-origin');
-    
-    // Permissions policy
-    res.setHeader('Permissions-Policy', 
-      'geolocation=(), microphone=(), camera=(), payment=(), usb=(), ' +
-      'magnetometer=(), accelerometer=(), gyroscope=(), ' +
-      'ambient-light-sensor=(), encrypted-media=()');
-    
-    // Additional security headers
-    res.setHeader('X-DNS-Prefetch-Control', 'on');
-    res.setHeader('X-Download-Options', 'noopen');
-    res.setHeader('X-Permitted-Cross-Domain-Policies', 'none');
-    
-    if (config.env === 'production') {
-      res.setHeader('Strict-Transport-Security', 'max-age=31536000; includeSubDomains; preload');
-    }
     
     next();
   });

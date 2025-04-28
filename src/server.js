@@ -17,8 +17,16 @@ import fs from 'fs';
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const app = express();
 
-// Connect to MongoDB
-connectDB();
+// Initialize MongoDB connection only if not already connected
+// This is important for serverless environments to avoid multiple connections
+let isConnected = false;
+const startDb = async () => {
+  if (!isConnected) {
+    await connectDB();
+    isConnected = true;
+  }
+};
+startDb();
 
 // Security middleware
 setupSecurity(app);
@@ -38,26 +46,34 @@ app.use(express.urlencoded({ extended: true, limit: '10kb' }));
 // Set up SEO middleware
 app.use(seoMiddleware());
 
-// Create views directory if it doesn't exist
-const viewsDir = path.join(__dirname, 'views');
-if (!fs.existsSync(viewsDir)) {
-  fs.mkdirSync(viewsDir, { recursive: true });
-}
+// Create directories if they don't exist
+// Note: In Vercel, this won't persist between requests, but it's
+// included for local development compatibility
+const ensureDirectoriesExist = () => {
+  try {
+    const viewsDir = path.join(__dirname, 'views');
+    if (!fs.existsSync(viewsDir)) {
+      fs.mkdirSync(viewsDir, { recursive: true });
+    }
 
-// Create public directory if it doesn't exist
-const publicDir = path.join(__dirname, '../public');
-if (!fs.existsSync(publicDir)) {
-  fs.mkdirSync(publicDir, { recursive: true });
-}
+    const publicDir = path.join(__dirname, '../public');
+    if (!fs.existsSync(publicDir)) {
+      fs.mkdirSync(publicDir, { recursive: true });
+    }
 
-// Create public/images directory if it doesn't exist
-const imagesDir = path.join(publicDir, 'images');
-if (!fs.existsSync(imagesDir)) {
-  fs.mkdirSync(imagesDir, { recursive: true });
-}
+    const imagesDir = path.join(publicDir, 'images');
+    if (!fs.existsSync(imagesDir)) {
+      fs.mkdirSync(imagesDir, { recursive: true });
+    }
+  } catch (error) {
+    console.error('Error creating directories:', error);
+  }
+};
+
+ensureDirectoriesExist();
 
 // Static files
-app.use(express.static(publicDir));
+app.use(express.static(path.join(__dirname, '../public')));
 
 // API Routes
 app.use('/api/auth', authRoutes);
@@ -89,8 +105,14 @@ app.use((err, req, res, next) => {
   });
 });
 
-const PORT = config.port || 5000;
+// Only listen directly when not being imported as a module
+// This is important for Vercel deployment where we export the app
+if (process.env.NODE_ENV !== 'production') {
+  const PORT = config.port || 5000;
+  app.listen(PORT, () => {
+    console.log(`Server running in ${config.env} mode on port ${PORT}`);
+  });
+}
 
-app.listen(PORT, () => {
-  console.log(`Server running in ${config.env} mode on port ${PORT}`);
-}); 
+// Export the app for Vercel serverless functions
+export default app; 

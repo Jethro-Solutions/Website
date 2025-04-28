@@ -1,8 +1,45 @@
-
-import React from 'react';
-import { Mail, Phone, MapPin } from 'lucide-react';
+import React, { useState } from 'react';
+import { Mail, Phone, MapPin, CheckCircle, AlertCircle } from 'lucide-react';
 
 const Contact: React.FC = () => {
+  const [status, setStatus] = useState<'idle' | 'submitting' | 'success' | 'error'>('idle');
+  const [formData, setFormData] = useState({
+    name: '',
+    email: '',
+    subject: '',
+    message: ''
+  });
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    const { id, value } = e.target;
+    setFormData(prev => ({ ...prev, [id]: value }));
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setStatus('submitting');
+
+    try {
+      const response = await fetch('https://formspree.io/f/YOUR_FORMSPREE_ID', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json'
+        },
+        body: JSON.stringify(formData)
+      });
+
+      if (response.ok) {
+        setStatus('success');
+        setFormData({ name: '', email: '', subject: '', message: '' });
+      } else {
+        setStatus('error');
+      }
+    } catch (error) {
+      setStatus('error');
+    }
+  };
+
   return (
     <section id="contact" className="section-padding bg-white">
       <div className="container mx-auto">
@@ -52,7 +89,22 @@ const Contact: React.FC = () => {
           
           <div className="bg-jethro-cream p-8 rounded-lg border border-jethro-gray/20 shadow-sm">
             <h3 className="text-xl font-playfair font-medium mb-6">Send Us a Message</h3>
-            <form className="space-y-6">
+            
+            {status === 'success' && (
+              <div className="bg-green-50 text-green-700 p-4 rounded-md mb-6 flex items-center gap-2">
+                <CheckCircle size={20} />
+                <span>Thank you for your message! We'll get back to you soon.</span>
+              </div>
+            )}
+            
+            {status === 'error' && (
+              <div className="bg-red-50 text-red-700 p-4 rounded-md mb-6 flex items-center gap-2">
+                <AlertCircle size={20} />
+                <span>There was an error submitting your message. Please try again.</span>
+              </div>
+            )}
+            
+            <form className="space-y-6" onSubmit={handleSubmit}>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div>
                   <label htmlFor="name" className="block text-jethro-black/70 mb-2">Full Name</label>
@@ -61,6 +113,9 @@ const Contact: React.FC = () => {
                     id="name" 
                     className="w-full p-3 rounded border border-jethro-gray/30 bg-white focus:outline-none focus:ring-2 focus:ring-jethro-blue/20"
                     placeholder="John Doe"
+                    value={formData.name}
+                    onChange={handleChange}
+                    required
                   />
                 </div>
                 <div>
@@ -70,6 +125,9 @@ const Contact: React.FC = () => {
                     id="email" 
                     className="w-full p-3 rounded border border-jethro-gray/30 bg-white focus:outline-none focus:ring-2 focus:ring-jethro-blue/20"
                     placeholder="john@example.com"
+                    value={formData.email}
+                    onChange={handleChange}
+                    required
                   />
                 </div>
               </div>
@@ -81,6 +139,9 @@ const Contact: React.FC = () => {
                   id="subject" 
                   className="w-full p-3 rounded border border-jethro-gray/30 bg-white focus:outline-none focus:ring-2 focus:ring-jethro-blue/20"
                   placeholder="How can we help you?"
+                  value={formData.subject}
+                  onChange={handleChange}
+                  required
                 />
               </div>
               
@@ -91,11 +152,18 @@ const Contact: React.FC = () => {
                   rows={4} 
                   className="w-full p-3 rounded border border-jethro-gray/30 bg-white focus:outline-none focus:ring-2 focus:ring-jethro-blue/20"
                   placeholder="Tell us about your project..."
+                  value={formData.message}
+                  onChange={handleChange}
+                  required
                 ></textarea>
               </div>
               
-              <button type="submit" className="btn-primary w-full">
-                Send Message
+              <button 
+                type="submit" 
+                className="btn-primary w-full flex items-center justify-center"
+                disabled={status === 'submitting'}
+              >
+                {status === 'submitting' ? 'Sending...' : 'Send Message'}
               </button>
             </form>
           </div>
