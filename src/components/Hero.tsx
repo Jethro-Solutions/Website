@@ -34,7 +34,7 @@ export const Spotlight = ({
   width = 560,
   height = 1380,
   smallWidth = 240,
-  duration = 7,
+  duration = 4,
   xOffset = 100,
 }: SpotlightProps = {}) => {
   return (
@@ -168,14 +168,12 @@ export const GridBackground = () => {
 
 // Data for service offerings displayed in the TiltedScroll component
 const offeringItems = [
-  { id: "1", text: "Technology Strategy" },
-  { id: "2", text: "IT Governance" },
-  { id: "3", text: "Digital Transformation" },
-  { id: "4", text: "Cloud Migration" },
-  { id: "5", text: "Cybersecurity" },
-  { id: "6", text: "Data Analytics" },
-  { id: "7", text: "Process Optimization" },
-  { id: "8", text: "Custom Solutions" },
+  { id: "1", text: "AI Agent Creation" },
+  { id: "2", text: "Digital Transformation" },
+  { id: "3", text: "Workflow Automation" },
+  { id: "4", text: "Data Analytics" },
+  { id: "5", text: "Process Optimization" },
+  { id: "6", text: "Custom Solutions" },
 ];
 
 /**

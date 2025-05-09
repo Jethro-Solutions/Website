@@ -139,18 +139,13 @@ export const generateOrganizationData = () => {
     ],
     contactPoint: {
       '@type': 'ContactPoint',
-      telephone: '+1-123-456-7890',
       contactType: 'customer service',
-      email: 'info@jethrosolutions.com',
+      email: 'jethrofounders@gmail.com',
       areaServed: 'Worldwide',
       availableLanguage: 'English'
     },
     address: {
       '@type': 'PostalAddress',
-      streetAddress: '123 Tech Street',
-      addressLocality: 'San Francisco',
-      addressRegion: 'CA',
-      postalCode: '94103',
       addressCountry: 'US'
     }
   };
@@ -212,15 +207,10 @@ export const generateLocalBusinessData = () => {
     url: config.productionUrl,
     logo: `${config.productionUrl}/images/logo.png`,
     image: `${config.productionUrl}/images/building.jpg`,
-    telephone: '+1-123-456-7890',
-    email: 'info@jethrosolutions.com',
+    email: 'jethrofounders@gmail.com',
     priceRange: '$$',
     address: {
       '@type': 'PostalAddress',
-      streetAddress: '123 Tech Street',
-      addressLocality: 'San Francisco',
-      addressRegion: 'CA',
-      postalCode: '94103',
       addressCountry: 'US'
     },
     geo: {

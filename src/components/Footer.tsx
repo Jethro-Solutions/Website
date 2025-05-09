@@ -17,7 +17,8 @@ const Footer: React.FC = () => {
           <nav className="mb-8 flex flex-wrap justify-center gap-6 text-jethro-cream/70">
             <a href="#services" className="hover:text-jethro-cream transition-colors">Services</a>
             <a href="#approach" className="hover:text-jethro-cream transition-colors">Our Approach</a>
-            <a href="#testimonials" className="hover:text-jethro-cream transition-colors">Testimonials</a>
+            {/* Testimonials link temporarily removed */}
+            {/* <a href="#testimonials" className="hover:text-jethro-cream transition-colors">Testimonials</a> */}
             <a href="#contact" className="hover:text-jethro-cream transition-colors">Contact Us</a>
           </nav>
           

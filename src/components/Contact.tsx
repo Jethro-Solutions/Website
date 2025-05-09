@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Mail, Phone, MapPin, CheckCircle, AlertCircle } from 'lucide-react';
+import { Mail, CheckCircle, AlertCircle } from 'lucide-react';
 
 const Contact: React.FC = () => {
   const [status, setStatus] = useState<'idle' | 'submitting' | 'success' | 'error'>('idle');
@@ -64,27 +64,7 @@ const Contact: React.FC = () => {
                 </div>
                 <div>
                   <p className="text-sm text-jethro-black/60">Email Us At</p>
-                  <p className="text-jethro-black font-medium">contact@jethrosolutions.com</p>
-                </div>
-              </div>
-              
-              <div className="flex items-center gap-4">
-                <div className="w-12 h-12 rounded-full bg-jethro-blue/10 flex items-center justify-center text-jethro-blue">
-                  <Phone size={20} />
-                </div>
-                <div>
-                  <p className="text-sm text-jethro-black/60">Call Us At</p>
-                  <p className="text-jethro-black font-medium">+1 (555) 123-4567</p>
-                </div>
-              </div>
-              
-              <div className="flex items-center gap-4">
-                <div className="w-12 h-12 rounded-full bg-jethro-blue/10 flex items-center justify-center text-jethro-blue">
-                  <MapPin size={20} />
-                </div>
-                <div>
-                  <p className="text-sm text-jethro-black/60">Visit Our Office</p>
-                  <p className="text-jethro-black font-medium">123 Wisdom Way, Tech Valley, CA 94103</p>
+                  <p className="text-jethro-black font-medium">jethrofounders@gmail.com</p>
                 </div>
               </div>
             </div>

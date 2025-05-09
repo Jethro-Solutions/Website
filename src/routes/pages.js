@@ -301,8 +301,7 @@ router.get('/contact', async (req, res) => {
         url: `${config.productionUrl}/contact`,
         contactPoint: {
           '@type': 'ContactPoint',
-          telephone: '+1-123-456-7890',
-          email: 'info@jethrosolutions.com',
+          email: 'jethrofounders@gmail.com',
           contactType: 'customer service'
         }
       }
@@ -336,9 +335,7 @@ router.get('/contact', async (req, res) => {
         
         <div class="contact-info">
           <h3>Contact Information</h3>
-          <p><strong>Email:</strong> info@jethrosolutions.com</p>
-          <p><strong>Phone:</strong> +1-123-456-7890</p>
-          <p><strong>Address:</strong> 123 Tech Street, San Francisco, CA 94103</p>
+          <p><strong>Email:</strong> jethrofounders@gmail.com</p>
         </div>
       </div>
     </section>
