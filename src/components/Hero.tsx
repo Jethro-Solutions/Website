@@ -181,6 +181,27 @@ const offeringItems = [
  * Combines visual elements, heading, description, CTAs and service offerings
  */
 const Hero: React.FC = () => {
+  // Handle navigation link clicks for smooth scrolling to page sections
+  const handleNavClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
+    const href = e.currentTarget.getAttribute('href');
+    
+    // Only handle links that start with # or have a hash in the same page
+    if (href && (href.startsWith('#') || (href.startsWith('/') && href.includes('#')))) {
+      e.preventDefault();
+      
+      // Extract the id from the href
+      const id = href.includes('#') ? href.split('#')[1] : href.substring(1);
+      
+      // Find the element to scroll to
+      const element = document.getElementById(id);
+      
+      // If element exists, scroll to it smoothly
+      if (element) {
+        element.scrollIntoView({ behavior: 'smooth' });
+      }
+    }
+  };
+
   return (
     <section className="min-h-screen pt-24 flex items-center section-padding bg-gray-900 relative overflow-hidden">
       {/* Background visual elements */}
@@ -203,7 +224,7 @@ const Hero: React.FC = () => {
             <div className="flex flex-col space-y-5 animate-fade-in">
               {/* Custom badge component */}
               <HeroBadge
-                href="/docs"
+                href="/first-advisor"
                 text="Your First Advisor"
                 icon={<Icons.logo className="h-4 w-4 text-white" />}
                 endIcon={<Icons.chevronRight className="h-4 w-4 text-white" />}
@@ -221,14 +242,14 @@ const Hero: React.FC = () => {
               <div className="flex flex-col sm:flex-row gap-4 pt-4">
                 {/* Primary CTA with green highlight and glow effect */}
                 <Button asChild variant="default" className="bg-[#28452c] hover:bg-[#28452c]/90 border border-[#4e8253] shadow-[0_0_15px_rgba(78,130,83,0.5)] transition-all duration-300">
-                  <a href="#services" className="flex items-center justify-center gap-2">
+                  <a href="#services" className="flex items-center justify-center gap-2" onClick={handleNavClick}>
                     Explore Our Services <ArrowRight size={18} />
                   </a>
                 </Button>
                 
                 {/* Secondary CTA with subtle styling */}
                 <Button asChild variant="secondary" className="border border-gray-400 shadow-[0_0_15px_rgba(255,255,255,0.2)] hover:shadow-[0_0_20px_rgba(255,255,255,0.3)] transition-all duration-300">
-                  <a href="#approach">
+                  <a href="#approach" onClick={handleNavClick}>
                     Our Approach
                   </a>
                 </Button>

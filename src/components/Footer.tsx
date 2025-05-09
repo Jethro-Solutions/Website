@@ -6,6 +6,34 @@ import { Label } from './ui/label';
 import { Facebook, Twitter, Instagram, Linkedin, Github } from 'lucide-react';
 
 const Footer: React.FC = () => {
+  // Handle navigation link clicks for smooth scrolling to page sections
+  const handleNavClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
+    try {
+      const href = e.currentTarget.getAttribute('href');
+      
+      // Only handle links that start with # (same page links)
+      if (href && href.startsWith('#')) {
+        e.preventDefault();
+        
+        // Extract the id from the href
+        const id = href.substring(1);
+        
+        // Find the element to scroll to
+        const element = document.getElementById(id);
+        
+        // If element exists, scroll to it smoothly
+        if (element) {
+          setTimeout(() => {
+            element.scrollIntoView({ behavior: 'smooth' });
+          }, 0);
+        }
+      }
+    } catch (error) {
+      console.error('Error in smooth scrolling:', error);
+      // Don't prevent default navigation if there's an error
+    }
+  };
+
   return (
     <footer className="bg-jethro-black py-12">
       <div className="container mx-auto px-4 md:px-6">
@@ -15,11 +43,12 @@ const Footer: React.FC = () => {
           </div>
           
           <nav className="mb-8 flex flex-wrap justify-center gap-6 text-jethro-cream/70">
-            <a href="#services" className="hover:text-jethro-cream transition-colors">Services</a>
-            <a href="#approach" className="hover:text-jethro-cream transition-colors">Our Approach</a>
+            <a href="#services" className="hover:text-jethro-cream transition-colors" onClick={handleNavClick}>Services</a>
+            <a href="#approach" className="hover:text-jethro-cream transition-colors" onClick={handleNavClick}>Our Approach</a>
+            <a href="/first-advisor#faq" className="hover:text-jethro-cream transition-colors">FAQ</a>
             {/* Testimonials link temporarily removed */}
-            {/* <a href="#testimonials" className="hover:text-jethro-cream transition-colors">Testimonials</a> */}
-            <a href="#contact" className="hover:text-jethro-cream transition-colors">Contact Us</a>
+            {/* <a href="#testimonials" className="hover:text-jethro-cream transition-colors" onClick={handleNavClick}>Testimonials</a> */}
+            <a href="#contact" className="hover:text-jethro-cream transition-colors" onClick={handleNavClick}>Contact Us</a>
           </nav>
           
           <div className="mb-8 flex space-x-4">

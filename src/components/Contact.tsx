@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { Mail, CheckCircle, AlertCircle } from 'lucide-react';
+import React, { useState, useEffect, useRef } from 'react';
+import { Mail, CheckCircle, AlertCircle, Calendar } from 'lucide-react';
 
 const Contact: React.FC = () => {
   const [status, setStatus] = useState<'idle' | 'submitting' | 'success' | 'error'>('idle');
@@ -9,6 +9,45 @@ const Contact: React.FC = () => {
     subject: '',
     message: ''
   });
+  
+  // Add ref for Google Calendar button
+  const calendarButtonRef = useRef<HTMLDivElement>(null);
+
+  // Load Google Calendar scripts and initialize the button
+  useEffect(() => {
+    // Add CSS
+    const linkElement = document.createElement('link');
+    linkElement.rel = 'stylesheet';
+    linkElement.href = 'https://calendar.google.com/calendar/scheduling-button-script.css';
+    document.head.appendChild(linkElement);
+
+    // Add script
+    const scriptElement = document.createElement('script');
+    scriptElement.src = 'https://calendar.google.com/calendar/scheduling-button-script.js';
+    scriptElement.async = true;
+    
+    // Initialize the calendar button after script loads
+    scriptElement.onload = () => {
+      if (window.calendar && window.calendar.schedulingButton && calendarButtonRef.current) {
+        window.calendar.schedulingButton.load({
+          url: 'https://calendar.google.com/calendar/appointments/schedules/AcZssZ2zKnuw2GKwxML9JrT7UPRK7bnLQZR9V95SODT0cDhujv2HPcOphsxw_2niPyxfofVSyYb1u9MZ?gv=true',
+          color: '#0B8043',
+          label: "Schedule a Consultation",
+          target: calendarButtonRef.current,
+        });
+      }
+    };
+    
+    document.head.appendChild(scriptElement);
+
+    // Cleanup
+    return () => {
+      document.head.removeChild(linkElement);
+      if (document.head.contains(scriptElement)) {
+        document.head.removeChild(scriptElement);
+      }
+    };
+  }, []);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { id, value } = e.target;
@@ -56,6 +95,23 @@ const Contact: React.FC = () => {
               Reach out to discuss how we can serve as your trusted first advisor 
               in technology implementation and optimization.
             </p>
+            
+            {/* Add calendar scheduling button */}
+            <div className="mb-8 flex flex-col gap-4">
+              <div className="flex items-center gap-4">
+                <div className="w-12 h-12 rounded-full bg-jethro-blue/10 flex items-center justify-center text-jethro-blue">
+                  <Calendar size={20} />
+                </div>
+                <div>
+                  <p className="text-sm text-jethro-black/60">Or Schedule Directly</p>
+                  <p className="text-jethro-black font-medium">Book a consultation time that works for you</p>
+                </div>
+              </div>
+              <div 
+                ref={calendarButtonRef} 
+                className="inline-block ml-16"
+              ></div>
+            </div>
             
             <div className="space-y-6">
               <div className="flex items-center gap-4">
@@ -155,5 +211,21 @@ const Contact: React.FC = () => {
     </section>
   );
 };
+
+// Add type definition for window object
+declare global {
+  interface Window {
+    calendar?: {
+      schedulingButton: {
+        load: (config: {
+          url: string;
+          color: string;
+          label: string;
+          target: HTMLElement;
+        }) => void;
+      };
+    };
+  }
+}
 
 export default Contact;

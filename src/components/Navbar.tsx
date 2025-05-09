@@ -17,6 +17,39 @@ const Navbar = () => {
   }, []);
 
   const toggleMenu = () => setIsOpen(!isOpen);
+  
+  // Handle navigation link clicks for smooth scrolling to page sections
+  const handleNavClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
+    const href = e.currentTarget.getAttribute('href');
+    
+    // If we're on the FirstAdvisor page and clicking a link that points to the homepage sections
+    if (window.location.pathname === '/first-advisor' && href && href.startsWith('/#')) {
+      e.preventDefault();
+      window.location.href = href; // Navigate to the home page with the anchor
+      return;
+    }
+    
+    // Only handle links that start with # or have a hash in the same page
+    if (href && (href.startsWith('#') || (href.startsWith('/') && href.includes('#')))) {
+      e.preventDefault();
+      
+      // Extract the id from the href
+      const id = href.includes('#') ? href.split('#')[1] : href.substring(1);
+      
+      // Find the element to scroll to
+      const element = document.getElementById(id);
+      
+      // If element exists, scroll to it smoothly
+      if (element) {
+        element.scrollIntoView({ behavior: 'smooth' });
+        
+        // Close mobile menu if it's open
+        if (isOpen) {
+          setIsOpen(false);
+        }
+      }
+    }
+  };
 
   return (
     <header 
@@ -40,17 +73,27 @@ const Navbar = () => {
           {['Services', 'Our Approach'].map((item) => (
             <a 
               key={item}
-              href={`#${item.toLowerCase().replace(' ', '-')}`}
+              href={item === 'Our Approach' ? '/#approach' : `/#${item.toLowerCase().replace(' ', '-')}`}
               className="relative font-medium text-jethro-black hover:text-jethro-blue transition-colors duration-200 
                 after:absolute after:bottom-0 after:left-0 after:h-0.5 after:w-0 after:bg-jethro-blue 
                 after:transition-all after:duration-300 hover:after:w-full"
+              onClick={handleNavClick}
             >
               {item}
             </a>
           ))}
           <a 
+            href="/first-advisor" 
+            className="relative font-medium text-jethro-black hover:text-jethro-blue transition-colors duration-200 
+              after:absolute after:bottom-0 after:left-0 after:h-0.5 after:w-0 after:bg-jethro-blue 
+              after:transition-all after:duration-300 hover:after:w-full"
+          >
+            First Advisor
+          </a>
+          <a 
             href="#contact" 
             className="btn-primary transform hover:scale-105 transition-transform duration-200"
+            onClick={handleNavClick}
           >
             Get in Touch
           </a>
@@ -75,17 +118,30 @@ const Navbar = () => {
           {['Services', 'Our Approach'].map((item) => (
             <a 
               key={item}
-              href={`#${item.toLowerCase().replace(' ', '-')}`}
+              href={item === 'Our Approach' ? '/#approach' : `/#${item.toLowerCase().replace(' ', '-')}`}
               className="font-medium text-jethro-black hover:text-jethro-blue transition-colors duration-200 py-2"
-              onClick={toggleMenu}
+              onClick={(e) => {
+                handleNavClick(e);
+                toggleMenu();
+              }}
             >
               {item}
             </a>
           ))}
           <a 
+            href="/first-advisor" 
+            className="font-medium text-jethro-black hover:text-jethro-blue transition-colors duration-200 py-2"
+            onClick={toggleMenu}
+          >
+            First Advisor
+          </a>
+          <a 
             href="#contact" 
             className="btn-primary w-full text-center transition-all duration-200"
-            onClick={toggleMenu}
+            onClick={(e) => {
+              handleNavClick(e);
+              toggleMenu();
+            }}
           >
             Get in Touch
           </a>

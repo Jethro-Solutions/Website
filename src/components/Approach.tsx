@@ -1,56 +1,111 @@
 import React from 'react';
-import { CheckCircle } from 'lucide-react';
-import { Button } from './ui/button';
+import { Check } from "lucide-react";
+import { Badge } from "@/components/ui/badge";
+import { motion } from "framer-motion";
+
+const GridBackground = () => {
+  return (
+    <motion.div
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      transition={{ duration: 1 }}
+      className="absolute inset-0 z-0"
+      style={{
+        backgroundImage: `url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32' width='32' height='32' fill='none' stroke='rgb(255 255 255 / 0.04)'%3e%3cpath d='M0 .5H31.5V32'/%3e%3c/svg%3e")`,
+      }}
+    />
+  );
+};
 
 const Approach: React.FC = () => {
+  const handleNavClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
+    const href = e.currentTarget.getAttribute('href');
+    
+    if (href && (href.startsWith('#') || (href.startsWith('/') && href.includes('#')))) {
+      e.preventDefault();
+      const id = href.includes('#') ? href.split('#')[1] : href.substring(1);
+      const element = document.getElementById(id);
+      if (element) {
+        element.scrollIntoView({ behavior: 'smooth' });
+      }
+    }
+  };
+
   return (
-    <section id="approach" className="section-padding bg-jethro-sage/10">
-      <div className="container mx-auto">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
-          <div>
-            <span className="text-jethro-blue font-medium tracking-wide">OUR APPROACH</span>
-            <h2 className="text-3xl md:text-4xl font-playfair font-semibold mt-3 mb-6">
-              Guiding Principles That Deliver Results
-            </h2>
-            <p className="text-jethro-black/70 leading-relaxed mb-8">
-              Our methodology combines deep technical expertise with a philosophy of responsible 
-              stewardship, ensuring your technology investments create lasting value.
-            </p>
-            
-            <div className="space-y-4">
-              {[
-                "First Advisor positioning for comprehensive guidance",
-                "Value-oriented optimization of resources and processes",
-                "Forward-thinking implementation with proven methodologies",
-                "Balanced approach to technology and human elements"
-              ].map((item, index) => (
-                <div key={index} className="flex items-start gap-3">
-                  <CheckCircle className="text-jethro-blue shrink-0 mt-1" size={20} />
-                  <p className="text-jethro-black/80">{item}</p>
-                </div>
-              ))}
+    <div id="approach" className="w-full py-20 lg:py-40 bg-gray-900 relative overflow-hidden">
+      <GridBackground />
+      <div className="container mx-auto relative z-10">
+        <div className="grid border-0 rounded-lg container p-8 grid-cols-1 gap-8 items-center lg:grid-cols-2">
+          <div className="flex gap-10 flex-col">
+            <div className="flex gap-4 flex-col">
+              <div>
+                <Badge variant="outline" className="text-white border-white/20">Our Approach</Badge>
+              </div>
+              <div className="flex gap-2 flex-col">
+                <h2 className="text-3xl lg:text-5xl tracking-tighter max-w-xl text-left font-regular text-white">
+                  How We Help You Succeed
+                </h2>
+                <p className="text-lg leading-relaxed tracking-tight text-gray-300 max-w-xl text-left">
+                  We automate tedious tasks, build custom AI agents, and develop websites that solve your business problems — no unnecessary complexity, just solutions that work.
+                </p>
+              </div>
             </div>
-            
-            <div className="mt-10">
-              <Button asChild variant="default" className="bg-[#28452c] hover:bg-[#28452c]/90 border border-[#4e8253] shadow-[0_0_15px_rgba(78,130,83,0.5)] transition-all duration-300">
-                <a href="#contact">Discuss Your Project</a>
-              </Button>
+            <div className="flex flex-col gap-6">
+              <h3 className="text-xl font-medium text-white">Our Core Services</h3>
+              <div className="grid lg:pl-6 grid-cols-1 sm:grid-cols-3 items-start lg:grid-cols-1 gap-6">
+                <div className="flex flex-row gap-6 items-start">
+                  <Check className="w-4 h-4 mt-2 text-blue-400" />
+                  <div className="flex flex-col gap-1">
+                    <p className="text-white">Workflow Automation</p>
+                    <p className="text-gray-300 text-sm">
+                      Streamline repetitive tasks and complex processes to free up your time.
+                    </p>
+                  </div>
+                </div>
+                <div className="flex flex-row gap-6 items-start">
+                  <Check className="w-4 h-4 mt-2 text-blue-400" />
+                  <div className="flex flex-col gap-1">
+                    <p className="text-white">AI Agent Development</p>
+                    <p className="text-gray-300 text-sm">
+                      Custom n8n AI agents designed for your specific business tasks.
+                    </p>
+                  </div>
+                </div>
+                <div className="flex flex-row gap-6 items-start">
+                  <Check className="w-4 h-4 mt-2 text-blue-400" />
+                  <div className="flex flex-col gap-1">
+                    <p className="text-white">Website Development</p>
+                    <p className="text-gray-300 text-sm">
+                      Professional, responsive websites with exactly the functionality you need.
+                    </p>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
-          
-          <div className="relative rounded-lg overflow-hidden h-[400px] bg-gradient-to-br from-jethro-blue to-jethro-blue/70 flex items-center justify-center shadow-xl">
-            <div className="absolute inset-0 opacity-10 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHZpZXdCb3g9IjAgMCA2MCA2MCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KICAgIDxnIGZpbGw9Im5vbmUiIGZpbGwtcnVsZT0iZXZlbm9kZCI+CiAgICAgICAgPGcgZmlsbD0iI2ZmZiIgZmlsbC1vcGFjaXR5PSIwLjQiPgogICAgICAgICAgICA8cGF0aCBkPSJNMzYgMzRjMC0yLjIgMS44LTQgNC00czQgMS44IDQgNC0xLjggNC00IDQtNC0xLjgtNC00TTYgMzRjMC0yLjIgMS44LTQgNC00czQgMS44IDQgNC0xLjggNC00IDQtNC0xLjgtNC00bTEyLTI0YzAtMi4yIDEuOC00IDQtNHM0IDEuOCA0IDQtMS44IDQtNCA0LTQtMS44LTQtNCI+PC9wYXRoPgogICAgICAgIDwvZz4KICAgIDwvZz4KPC9zdmc+')]"></div>
-            <div className="text-center text-jethro-cream p-12 relative z-10">
-              <h3 className="text-3xl font-playfair font-medium mb-4">Our Philosophy</h3>
-              <p className="text-jethro-cream/90 leading-relaxed max-w-md mx-auto">
-                "We believe in the power of wisdom-driven technology implementation 
-                that balances innovation with responsible stewardship."
-              </p>
+          <div className="bg-gray-800/80 rounded-xl shadow-md overflow-hidden p-8 border border-gray-700">
+            <h3 className="text-xl font-medium text-white mb-4">Technologies We Use</h3>
+            <div className="grid grid-cols-2 gap-6">
+              {[
+                { name: "n8n", color: "from-[#EFEDE5] to-[#EFEDE5]/90" },
+                { name: "React", color: "from-[#EFEDE5] to-[#EFEDE5]/90" },
+                { name: "LangChain", color: "from-[#EFEDE5] to-[#EFEDE5]/90" },
+                { name: "Firebase", color: "from-[#EFEDE5] to-[#EFEDE5]/90" },
+                { name: "Tailwind CSS", color: "from-[#EFEDE5] to-[#EFEDE5]/90" },
+                { name: "Claude API", color: "from-[#EFEDE5] to-[#EFEDE5]/90" }
+              ].map((tech, index) => (
+                <div 
+                  key={index} 
+                  className={`bg-gradient-to-br ${tech.color} backdrop-blur-sm border border-white/10 rounded-lg p-4 text-center shadow-sm hover:shadow-md transition-all duration-300 ease-in-out hover:scale-105 hover:-translate-y-1 text-[#111827]`}
+                >
+                  <div className="font-medium">{tech.name}</div>
+                </div>
+              ))}
             </div>
           </div>
         </div>
       </div>
-    </section>
+    </div>
   );
 };
 
